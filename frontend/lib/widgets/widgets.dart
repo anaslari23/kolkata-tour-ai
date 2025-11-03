@@ -14,7 +14,7 @@ class SearchBarField extends StatelessWidget {
         prefixIcon: const Icon(Icons.search),
         hintText: hint,
         filled: true,
-        fillColor: Colors.grey.shade100,
+        fillColor: Colors.white,
         contentPadding: const EdgeInsets.symmetric(vertical: 14, horizontal: 12),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(14),
@@ -107,7 +107,7 @@ class PlaceCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(color: Colors.grey.shade700),
                     ),
-                    const SizedBox(height: 6),
+                    const Spacer(),
                     Wrap(
                       spacing: 4,
                       runSpacing: -8,
@@ -146,7 +146,7 @@ class ChatInputBar extends StatelessWidget {
               decoration: InputDecoration(
                 hintText: 'Type your message...',
                 filled: true,
-                fillColor: Colors.grey.shade100,
+                fillColor: Colors.white,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(24),
                   borderSide: BorderSide.none,
@@ -155,7 +155,7 @@ class ChatInputBar extends StatelessWidget {
               ),
             ),
           ),
-          IconButton(onPressed: onMic, icon: const Icon(Icons.mic)),
+          IconButton(onPressed: onMic, icon: const Icon(Icons.mic), tooltip: 'Voice'),
           const SizedBox(width: 4),
           FloatingActionButton.small(onPressed: onSend, child: const Icon(Icons.send_rounded))
         ],

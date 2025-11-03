@@ -51,5 +51,9 @@
 	<false/>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Allow location to suggest stops along your route.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Microphone is used to convert your voice to text for AI chat.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Speech recognition is used to transcribe your voice to text.</string>
 </dict>
 </plist>

@@ -337,3 +337,48 @@ class RAGPipeline:
             return txt
         return self._fallback_answer(question, context_items, user_pref, hour, language)
 
+    # --- Similar items ---
+    def similar(self, item_id: str, k: int = 8) -> List[Dict]:
+        """Return items similar to the given item id using FAISS if available, otherwise keyword overlap."""
+        base = next((it for it in self.items if str(it.get('id')) == str(item_id)), None)
+        if not base:
+            return []
+        # Prefer FAISS + model when possible by embedding the base item's combined text
+        if self._get_model() is not None and self.index is not None:
+            text = ' '.join([
+                str(base.get('name','')),
+                str(base.get('category','')),
+                str(base.get('description','')),
+                str(base.get('story','')),
+                ' '.join([str(x) for x in (base.get('tags') or [])]),
+            ])
+            vec = self.model.encode([text], normalize_embeddings=True)
+            scores, idxs = self.index.search(vec, max(k*3, k))
+            out: List[Dict] = []
+            for i, score in zip(idxs[0].tolist(), scores[0].tolist()):
+                if i < 0 or i >= len(self.meta):
+                    continue
+                cand = dict(self.meta[i])
+                if str(cand.get('id')) == str(item_id):
+                    continue
+                cand['score'] = float(score)
+                out.append(cand)
+            out.sort(key=lambda x: x.get('score', 0), reverse=True)
+            return out[:k]
+        # Fallback: simple tag/name overlap
+        btags = set([str(x).lower() for x in (base.get('tags') or [])])
+        scored: List[Dict] = []
+        for it in self.items:
+            if str(it.get('id')) == str(item_id):
+                continue
+            overlap = len(btags.intersection([str(x).lower() for x in (it.get('tags') or [])]))
+            if base.get('category') and it.get('category') and str(base['category']).split(':')[0] == str(it['category']).split(':')[0]:
+                overlap += 1
+            if str(base.get('city','')).lower() == str(it.get('city','')).lower():
+                overlap += 0.5
+            it2 = dict(it)
+            it2['score'] = float(overlap)
+            scored.append(it2)
+        scored.sort(key=lambda x: x.get('score', 0), reverse=True)
+        return scored[:k]
+

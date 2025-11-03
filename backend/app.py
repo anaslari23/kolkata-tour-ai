@@ -6,6 +6,7 @@ try:
     import requests  # optional for local LLM via Ollama
 except Exception:
     requests = None
+import subprocess
 
 app = Flask(__name__)
 
@@ -43,6 +44,15 @@ def places():
 def cities():
     cities = sorted({(it.get('city') or 'Kolkata') for it in rag.items})
     return jsonify({'cities': cities})
+
+@app.get('/similar')
+def similar():
+    item_id = request.args.get('id') or request.args.get('item_id') or ''
+    k = int(request.args.get('k') or 8)
+    if not item_id:
+        return jsonify({'results': []})
+    results = rag.similar(item_id, k=k)
+    return jsonify({'results': results})
 
 @app.post('/chat')
 def chat():
@@ -102,6 +112,21 @@ def prefs_update():
     user_id = data.get('user_id', 'anon')
     prefs.update_explicit(user_id, data.get('preferences') or {})
     return jsonify({'ok': True, 'prefs': prefs.get(user_id)})
+
+@app.post('/reindex')
+def reindex():
+    """Rebuild FAISS index from current data if dependencies are available.
+    Safe no-op if faiss is not installed. Returns ok=true regardless, with a message.
+    """
+    try:
+        # Run build_index as a module to avoid path issues
+        root = os.path.dirname(__file__)
+        script = os.path.join(root, 'utils', 'build_index.py')
+        subprocess.check_call(['python', script])
+        msg = 'Index rebuilt.'
+    except Exception as e:
+        msg = f'Reindex skipped: {e.__class__.__name__}'
+    return jsonify({'ok': True, 'message': msg})
 
 def _deg2rad(d):
     return d * math.pi / 180.0

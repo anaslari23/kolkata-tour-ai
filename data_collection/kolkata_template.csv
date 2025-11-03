@@ -1,0 +1,4 @@
+ID,Name,Category & Subcategory,Description,History,Nearby Recommendations,Personal Tips,Latitude,Longitude,Opening Hours,Price,Best Time,Past Events,Sentiment Tags,Image URLs,Source URL,City,Type
+21,Example Place,Landmark: Bridge,"Iconic bridge over the Hooghly River.","Opened in 1943; engineering marvel.","Tea stall: Kaku Cha, Cafe: Riverfront Cafe","Catch sunset from the east side.",22.585,88.346,"24x7","Free","Sunset","—","iconic,photography,sunset,river-view","https://example.com/img1.jpg","https://en.wikipedia.org/wiki/Howrah_Bridge",Kolkata,place
+22,Hidden Courtyard,Market: Lane,"Quiet courtyard near College Street with old book shops.","Local adda spot for students.","Tea stall: Dada Cha","Visit evenings for a calm vibe.",22.574,88.364,"10:00-21:00","Free","Evening","—","quiet,hidden gem,tea","","",Kolkata,place
+

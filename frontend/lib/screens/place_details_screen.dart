@@ -5,6 +5,7 @@ import 'package:geolocator/geolocator.dart';
 import '../services/api.dart';
 import '../state/prefs.dart';
 import '../state/prefs.dart' show FavoritesStore;
+import '../widgets/widgets.dart';
 
 class PlaceDetailsScreen extends StatelessWidget {
   final Place place;
@@ -149,6 +150,39 @@ class PlaceDetailsScreen extends StatelessWidget {
                         },
                       ),
                     ),
+                    const SizedBox(height: 16),
+                    const Text('Similar Places', style: TextStyle(fontWeight: FontWeight.w700)),
+                    const SizedBox(height: 8),
+                    SizedBox(
+                      height: 210,
+                      child: FutureBuilder<List<Place>>(
+                        future: const ApiService().similar(place.id, k: 8),
+                        builder: (context, snap) {
+                          if (snap.connectionState != ConnectionState.done) {
+                            return const Center(child: CircularProgressIndicator());
+                          }
+                          final items = snap.data ?? const <Place>[];
+                          if (items.isEmpty) return const Center(child: Text('No similar places yet'));
+                          return ListView.separated(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: items.length,
+                            separatorBuilder: (_, __) => const SizedBox(width: 10),
+                            itemBuilder: (c2, j) {
+                              final p = items[j];
+                              return SizedBox(
+                                width: 220,
+                                child: PlaceCard(
+                                  place: p,
+                                  onTap: () {
+                                    Navigator.push(c2, MaterialPageRoute(builder: (_) => PlaceDetailsScreen(place: p)));
+                                  },
+                                ),
+                              );
+                            },
+                          );
+                        },
+                      ),
+                    ),
                     const SizedBox(height: 90),
                   ],
                 ),
@@ -222,7 +256,43 @@ class PlaceDetailsScreen extends StatelessWidget {
               const SizedBox(width: 12),
               Expanded(
                 child: ElevatedButton.icon(
-                  onPressed: (){},
+                  onPressed: () async {
+                    final items = await const ApiService().similar(place.id, k: 8);
+                    if (!context.mounted) return;
+                    showModalBottomSheet(
+                      context: context,
+                      showDragHandle: true,
+                      builder: (c) {
+                        return SafeArea(
+                          child: Padding(
+                            padding: const EdgeInsets.all(16),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text('Similar Places', style: TextStyle(fontWeight: FontWeight.w700)),
+                                const SizedBox(height: 12),
+                                if (items.isEmpty) const Text('No similar places yet'),
+                                for (final p in items)
+                                  ListTile(
+                                    contentPadding: EdgeInsets.zero,
+                                    leading: (p.image != null && p.image!.isNotEmpty)
+                                      ? ClipRRect(borderRadius: BorderRadius.circular(8), child: Image.network(p.image!, width: 48, height: 48, fit: BoxFit.cover))
+                                      : const Icon(Icons.place),
+                                    title: Text(p.name),
+                                    subtitle: Text(p.category),
+                                    onTap: (){
+                                      Navigator.of(c).pop();
+                                      Navigator.of(context).push(MaterialPageRoute(builder: (_) => PlaceDetailsScreen(place: p)));
+                                    },
+                                  ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  },
                   icon: const Icon(Icons.auto_awesome_rounded),
                   label: const Text('Find Similar'),
                 ),

@@ -112,4 +112,15 @@ class ApiService {
     }
     throw Exception('getPlaces failed: ${res.statusCode} ${res.body}');
   }
+
+  Future<List<Place>> similar(String id, {int k = 8}) async {
+    final uri = Uri.parse('$baseUrl/similar').replace(queryParameters: {'id': id, 'k': '$k'});
+    final res = await http.get(uri);
+    if (res.statusCode >= 200 && res.statusCode < 300) {
+      final data = jsonDecode(res.body) as Map<String, dynamic>;
+      final list = (data['results'] as List? ?? []);
+      return list.map((e) => Place.fromJson(e as Map<String, dynamic>)).toList();
+    }
+    throw Exception('similar failed: ${res.statusCode} ${res.body}');
+  }
 }

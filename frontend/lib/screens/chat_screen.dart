@@ -4,6 +4,8 @@ import '../widgets/widgets.dart';
 import '../services/api.dart';
 import 'place_details_screen.dart';
 import '../state/prefs.dart';
+import 'package:speech_to_text/speech_to_text.dart' as stt;
+import 'package:flutter/foundation.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -107,6 +109,27 @@ class _ChatScreenState extends State<ChatScreen> {
   ];
   bool typing = false;
   final api = const ApiService();
+  late final stt.SpeechToText _stt;
+  bool _sttAvailable = false;
+  bool _listening = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _stt = stt.SpeechToText();
+    () async {
+      try {
+        if (kIsWeb) {
+          _sttAvailable = false; // speech_to_text not supported on web in this build
+        } else {
+          _sttAvailable = await _stt.initialize(onStatus: (_) {}, onError: (_) {});
+        }
+      } catch (_) {
+        _sttAvailable = false;
+      }
+      if (mounted) setState(() {});
+    }();
+  }
 
   void send() {
     final text = controller.text.trim();
@@ -169,8 +192,10 @@ class _ChatScreenState extends State<ChatScreen> {
               itemBuilder: (c,i){
                 if (typing && i == messages.length) {
                   return Row(
-                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      const CircleAvatar(radius: 14, child: Icon(Icons.android, size: 16)),
+                      const SizedBox(width: 8),
                       Container(
                         margin: const EdgeInsets.symmetric(vertical: 6),
                         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
@@ -179,7 +204,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           borderRadius: BorderRadius.circular(14),
                         ),
                         child: const SizedBox(
-                          width: 40,
+                          width: 44,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -192,63 +217,120 @@ class _ChatScreenState extends State<ChatScreen> {
                   );
                 }
                 final m = messages[i];
-                final align = m.isUser ? CrossAxisAlignment.end : CrossAxisAlignment.start;
-                final bubbleColor = m.isUser ? Colors.amber.shade200 : Colors.grey.shade200;
-                return Column(
-                  crossAxisAlignment: align,
-                  children: [
-                    if (!m.isUser)
-                      const Padding(
-                        padding: EdgeInsets.only(left: 6, bottom: 4),
-                        child: Text('AI Guide', style: TextStyle(color: Colors.black54, fontSize: 12)),
-                      ),
-                    Container(
-                      margin: const EdgeInsets.symmetric(vertical: 6),
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                      decoration: BoxDecoration(
-                        color: bubbleColor,
-                        borderRadius: BorderRadius.circular(14),
-                      ),
-                      child: Text(m.text),
-                    ),
-                    if (m.imageUrl != null)
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(14),
-                        child: Image.network(m.imageUrl!, width: 280),
-                      ),
-                    if (!m.isUser && (m.suggestions != null) && m.suggestions!.isNotEmpty)
-                      Padding(
-                        padding: const EdgeInsets.only(top: 8, bottom: 4),
-                        child: SizedBox(
-                          height: 210,
-                          child: ListView.separated(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: m.suggestions!.length,
-                            separatorBuilder: (_, __) => const SizedBox(width: 10),
-                            itemBuilder: (c2, j) {
-                              final p = m.suggestions![j];
-                              return SizedBox(
-                                width: 220,
-                                child: PlaceCard(
-                                  place: p,
-                                  onTap: () {
-                                    Navigator.push(c2, MaterialPageRoute(builder: (_) => PlaceDetailsScreen(place: p)));
+                final theme = Theme.of(context);
+                final isUser = m.isUser;
+                final bubbleColor = isUser ? theme.colorScheme.secondaryContainer : Colors.grey.shade200;
+                final textColor = isUser ? theme.colorScheme.onSecondaryContainer : Colors.black87;
+
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 6),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: isUser ? MainAxisAlignment.end : MainAxisAlignment.start,
+                    children: [
+                      if (!isUser) ...[
+                        const CircleAvatar(radius: 14, child: Icon(Icons.android, size: 16)),
+                        const SizedBox(width: 8),
+                      ],
+                      Flexible(
+                        child: Column(
+                          crossAxisAlignment: isUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+                          children: [
+                            if (!isUser)
+                              const Padding(
+                                padding: EdgeInsets.only(left: 6, bottom: 4),
+                                child: Text('AI Guide', style: TextStyle(color: Colors.black54, fontSize: 12)),
+                              ),
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                              decoration: BoxDecoration(
+                                color: bubbleColor,
+                                borderRadius: BorderRadius.only(
+                                  topLeft: const Radius.circular(14),
+                                  topRight: const Radius.circular(14),
+                                  bottomLeft: Radius.circular(isUser ? 14 : 4),
+                                  bottomRight: Radius.circular(isUser ? 4 : 14),
+                                ),
+                              ),
+                              child: Text(m.text, style: TextStyle(color: textColor)),
+                            ),
+                            if (m.imageUrl != null) ...[
+                              const SizedBox(height: 6),
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(12),
+                                child: Image.network(m.imageUrl!, width: 280),
+                              ),
+                            ],
+                            if (!isUser && (m.suggestions != null) && m.suggestions!.isNotEmpty) ...[
+                              const SizedBox(height: 8),
+                              SizedBox(
+                                height: 210,
+                                child: ListView.separated(
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: m.suggestions!.length,
+                                  separatorBuilder: (_, __) => const SizedBox(width: 10),
+                                  itemBuilder: (c2, j) {
+                                    final p = m.suggestions![j];
+                                    return SizedBox(
+                                      width: 220,
+                                      child: PlaceCard(
+                                        place: p,
+                                        onTap: () {
+                                          Navigator.push(c2, MaterialPageRoute(builder: (_) => PlaceDetailsScreen(place: p)));
+                                        },
+                                      ),
+                                    );
                                   },
                                 ),
-                              );
-                            },
-                          ),
+                              ),
+                            ],
+                          ],
                         ),
                       ),
-                  ],
+                      if (isUser) ...[
+                        const SizedBox(width: 8),
+                        const CircleAvatar(radius: 14, child: Icon(Icons.person, size: 16)),
+                      ],
+                    ],
+                  ),
                 );
               },
             ),
           ),
-          ChatInputBar(controller: controller, onSend: send, onMic: (){}),
+          ChatInputBar(controller: controller, onSend: send, onMic: _onMic),
         ],
       ),
     );
+  }
+
+  void _onMic() async {
+    if (!_sttAvailable) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Speech not available on this device')));
+      return;
+    }
+    if (_listening) {
+      await _stt.stop();
+      setState(() { _listening = false; });
+      return;
+    }
+    try {
+      setState(() { _listening = true; });
+      await _stt.listen(onResult: (res) {
+        final text = res.recognizedWords;
+        if (text.isNotEmpty) {
+          controller.text = text;
+        }
+        if (res.finalResult) {
+          setState(() { _listening = false; });
+          _stt.stop();
+          if (controller.text.trim().isNotEmpty) send();
+        }
+      });
+    } catch (_) {
+      if (!mounted) return;
+      setState(() { _listening = false; _sttAvailable = false; });
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Mic permission denied or unavailable')));
+    }
   }
 }
 
