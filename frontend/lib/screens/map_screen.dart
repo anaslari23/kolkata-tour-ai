@@ -16,7 +16,7 @@ class MapScreen extends StatefulWidget {
 }
 
 class _MapScreenState extends State<MapScreen> {
-  final api = const ApiService();
+  final api = ApiService();
   List<Place> places = const [];
   bool loading = true;
   String? error;

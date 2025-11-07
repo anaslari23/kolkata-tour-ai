@@ -19,7 +19,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
   String query = '';
   String selected = 'All';
   final filters = const ['All','Food','History','Art','Parks','Religious','Landmark'];
-  final api = const ApiService();
+  final api = ApiService();
   List<Place> remote = const [];
   bool loading = false;
   String? error;

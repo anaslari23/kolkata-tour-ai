@@ -68,7 +68,7 @@ Future<void> showPrefsSheet(BuildContext context) async {
                       prefsNotifier.value = tmp;
                       await savePrefs(tmp);
                       try {
-                        await const ApiService().postJson('/prefs/update', {
+                        await ApiService().postJson('/prefs/update', {
                           'user_id': 'A123',
                           'preferences': tmp.toPrefsPayload(),
                         });

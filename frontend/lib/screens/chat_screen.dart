@@ -15,7 +15,7 @@ class ChatScreen extends StatefulWidget {
 }
 
 Future<void> apiClientUpdatePrefs(AppPrefs p) async {
-  final api = const ApiService();
+  final api = ApiService();
   try {
     await api.postJson('/prefs/update', {
       'user_id': 'A123',
@@ -108,7 +108,7 @@ class _ChatScreenState extends State<ChatScreen> {
     const Message(isUser: false, text: 'Welcome to Kolkata! How can I help you explore the City of Joy today?'),
   ];
   bool typing = false;
-  final api = const ApiService();
+  final api = ApiService();
   late final stt.SpeechToText _stt;
   bool _sttAvailable = false;
   bool _listening = false;

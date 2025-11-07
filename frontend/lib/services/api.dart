@@ -5,7 +5,7 @@ import '../models/place.dart';
 
 class ApiService {
   final String baseUrl;
-  const ApiService({this.baseUrl = BASE_URL});
+  ApiService({String? baseUrl}) : baseUrl = baseUrl ?? BASE_URL;
 
   Future<Map<String, dynamic>> postJson(String path, Map<String, dynamic> body) async {
     final uri = Uri.parse('$baseUrl$path');

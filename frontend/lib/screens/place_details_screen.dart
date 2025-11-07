@@ -156,7 +156,7 @@ class PlaceDetailsScreen extends StatelessWidget {
                     SizedBox(
                       height: 210,
                       child: FutureBuilder<List<Place>>(
-                        future: const ApiService().similar(place.id, k: 8),
+                        future: ApiService().similar(place.id, k: 8),
                         builder: (context, snap) {
                           if (snap.connectionState != ConnectionState.done) {
                             return const Center(child: CircularProgressIndicator());
@@ -200,7 +200,7 @@ class PlaceDetailsScreen extends StatelessWidget {
                   onPressed: () async {
                     final pos = await _getCurrentPosition(context);
                     if (pos == null) return;
-                    final api = const ApiService();
+                    final api = ApiService();
                     try {
                       final prefs = prefsNotifier.value;
                       final inferred = prefs.toRoutePayload();
@@ -257,7 +257,7 @@ class PlaceDetailsScreen extends StatelessWidget {
               Expanded(
                 child: ElevatedButton.icon(
                   onPressed: () async {
-                    final items = await const ApiService().similar(place.id, k: 8);
+                    final items = await ApiService().similar(place.id, k: 8);
                     if (!context.mounted) return;
                     showModalBottomSheet(
                       context: context,
