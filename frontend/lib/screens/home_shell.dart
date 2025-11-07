@@ -30,7 +30,9 @@ class _HomeShellState extends State<HomeShell> {
     return Scaffold(
       body: pages[index],
       bottomNavigationBar: NavigationBar(
-        selectedIndex: index,
+        // Because we inserted a pseudo "AI" tab at nav index 1 that opens Chat via push,
+        // we need to offset the visual selection for pages after it.
+        selectedIndex: index >= 1 ? index + 1 : index,
         onDestinationSelected: (i) {
           // Inserted AI as a middle tab (index 1). Selecting it opens Chat.
           if (i == 1) {

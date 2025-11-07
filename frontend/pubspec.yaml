@@ -14,7 +14,7 @@ dependencies:
   google_maps_flutter: ^2.9.0
   geolocator: ^10.1.0
   shared_preferences: ^2.3.2
-  speech_to_text: ^6.6.0
+  speech_to_text: ^7.3.0
 
 dev_dependencies:
   flutter_test:

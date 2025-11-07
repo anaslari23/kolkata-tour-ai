@@ -22,6 +22,11 @@ class _MapScreenState extends State<MapScreen> {
   String? error;
   GoogleMapController? _ctrl;
   bool _myLocEnabled = false;
+  String _typeFilter = 'All';
+  final List<String> _filters = const ['All','Food','History','Art','Parks','Religious','Landmark'];
+  String _query = '';
+  final PageController _pageCtrl = PageController(viewportFraction: 0.86);
+  int _currentIdx = 0;
 
   @override
   void initState() {
@@ -29,6 +34,12 @@ class _MapScreenState extends State<MapScreen> {
     // load saved preferences
     loadPrefs();
     _load();
+  }
+
+  @override
+  void dispose() {
+    _pageCtrl.dispose();
+    super.dispose();
   }
 
   Future<Position?> _getCurrentPosition(BuildContext context) async {
@@ -66,8 +77,26 @@ class _MapScreenState extends State<MapScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final filtered = places.where((p){
+      final okCoords = p.lat!=0 && p.lng!=0;
+      if (!okCoords) return false;
+      final typeOk = _typeFilter == 'All' || (p.category.toLowerCase().contains(_typeFilter.toLowerCase())) || (p.tags.any((t)=>t.toLowerCase().contains(_typeFilter.toLowerCase())));
+      final qOk = _query.isEmpty || p.name.toLowerCase().contains(_query.toLowerCase()) || p.category.toLowerCase().contains(_query.toLowerCase());
+      return typeOk && qOk;
+    }).toList();
+
+    // Clamp current carousel index to valid range after filtering
+    if (_currentIdx >= filtered.length) {
+      _currentIdx = 0;
+      if (_pageCtrl.hasClients && filtered.isNotEmpty) {
+        try {
+          _pageCtrl.jumpToPage(0);
+        } catch (_) {}
+      }
+    }
+
     final markers = <Marker>{};
-    for (final p in places.where((p)=>p.lat!=0 && p.lng!=0)) {
+    for (final p in filtered) {
       final m = Marker(
         markerId: MarkerId(p.id),
         position: LatLng(p.lat, p.lng),
@@ -78,15 +107,16 @@ class _MapScreenState extends State<MapScreen> {
       markers.add(m);
     }
 
-    final initial = places.firstWhere(
+    final initial = (filtered.isNotEmpty ? filtered : places).firstWhere(
       (p)=>p.lat!=0&&p.lng!=0,
       orElse: ()=> const Place(id: '0', name: 'Kolkata', category: '', description: '', images: [], tags: [], lat: 22.5726, lng: 88.3639)
     );
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Kolkata Map'), actions: [
-        IconButton(onPressed: () => showPrefsSheet(context), icon: const Icon(Icons.tune))
-      ]),
+      appBar: AppBar(
+        title: const Text('Kolkata Map'),
+        actions: [IconButton(onPressed: () => showPrefsSheet(context), icon: const Icon(Icons.tune))],
+      ),
       body: Stack(
         children: [
           Positioned.fill(
@@ -97,6 +127,49 @@ class _MapScreenState extends State<MapScreen> {
               myLocationEnabled: _myLocEnabled,
               myLocationButtonEnabled: true,
               zoomControlsEnabled: false,
+            ),
+          ),
+          // Top overlay: search + filters
+          SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Material(
+                    elevation: 2,
+                    borderRadius: BorderRadius.circular(24),
+                    child: TextField(
+                      decoration: const InputDecoration(
+                        hintText: 'Search places on map',
+                        prefixIcon: Icon(Icons.search),
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      ),
+                      onChanged: (v){ setState(()=>_query=v); },
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  SizedBox(
+                    height: 40,
+                    child: ListView.separated(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: _filters.length,
+                      separatorBuilder: (_, __) => const SizedBox(width: 8),
+                      itemBuilder: (c, i){
+                        final f = _filters[i];
+                        final sel = f == _typeFilter;
+                        return ChoiceChip(
+                          label: Text(f),
+                          selected: sel,
+                          onSelected: (_){ setState(()=>_typeFilter=f); },
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
           if (loading)
@@ -113,6 +186,110 @@ class _MapScreenState extends State<MapScreen> {
                 ),
               ),
             ),
+          // Bottom swipable carousel of places (anchored)
+          (filtered.isNotEmpty)
+              ? Align(
+                  alignment: Alignment.bottomCenter,
+                  child: SafeArea(
+                    minimum: const EdgeInsets.only(bottom: 12),
+                    child: SizedBox(
+                      height: 170,
+                      child: PageView.builder(
+                        controller: _pageCtrl,
+                        itemCount: filtered.length,
+                        padEnds: false,
+                        onPageChanged: (i) {
+                          _currentIdx = i;
+                          if (i >= 0 && i < filtered.length) {
+                            final p = filtered[i];
+                            if (_ctrl != null) {
+                              Future.microtask(() {
+                                if (!mounted) return;
+                                _ctrl?.animateCamera(
+                                  CameraUpdate.newCameraPosition(
+                                    CameraPosition(
+                                      target: LatLng(p.lat, p.lng),
+                                      zoom: 15.0,
+                                      tilt: 0,
+                                      bearing: 0,
+                                    ),
+                                  ),
+                                );
+                              });
+                            }
+                          }
+                        },
+                        itemBuilder: (c, i) {
+                          final p = filtered[i];
+                          return Padding(
+                            padding: EdgeInsets.only(left: i == 0 ? 16 : 12, right: 12),
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.push(context, MaterialPageRoute(builder: (_)=>PlaceDetailsScreen(place: p)));
+                              },
+                              child: Material(
+                                elevation: 6,
+                                borderRadius: BorderRadius.circular(16),
+                                clipBehavior: Clip.antiAlias,
+                                child: Row(
+                                  children: [
+                                    AspectRatio(
+                                      aspectRatio: 1,
+                                      child: Image.network(
+                                        p.images.isNotEmpty ? p.images.first : '',
+                                        fit: BoxFit.cover,
+                                        errorBuilder: (c, e, st) => Container(color: Colors.grey.shade200, child: const Icon(Icons.image_not_supported_outlined)),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(12.0),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            Text(p.name, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontWeight: FontWeight.w700)),
+                                            const SizedBox(height: 4),
+                                            Text(p.category, maxLines: 2, overflow: TextOverflow.ellipsis, style: const TextStyle(color: Colors.black54)),
+                                            const SizedBox(height: 8),
+                                            Row(
+                                              children: const [
+                                                Icon(Icons.place, size: 14, color: Colors.teal),
+                                                SizedBox(width: 4),
+                                                Text('View on map', style: TextStyle(fontSize: 12, color: Colors.teal)),
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                )
+              : const SizedBox.shrink(),
+          // Optional bottom gradient scrim for contrast
+          IgnorePointer(
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                height: 60,
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.bottomCenter,
+                    end: Alignment.topCenter,
+                    colors: [Color(0x66000000), Color(0x00000000)],
+                  ),
+                ),
+              ),
+            ),
+          ),
         ],
       ),
       floatingActionButton: Column(

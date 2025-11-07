@@ -5,6 +5,7 @@ import '../services/api.dart';
 import '../widgets/widgets.dart';
 import 'place_details_screen.dart';
 import '../widgets/prefs_sheet.dart';
+import 'profile_screen.dart';
 import '../state/prefs.dart';
 
 class ExploreScreen extends StatefulWidget {
@@ -90,6 +91,22 @@ class _ExploreScreenState extends State<ExploreScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 12.0),
+          child: InkWell(
+            customBorder: const CircleBorder(),
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (_) => const ProfileScreen()),
+              );
+            },
+            child: CircleAvatar(
+              radius: 16,
+              backgroundColor: Colors.teal.shade100,
+              child: const Icon(Icons.person, size: 18, color: Colors.teal),
+            ),
+          ),
+        ),
         title: const Text(
           'Explore Kolkata',
           style: TextStyle(fontWeight: FontWeight.w700),
@@ -99,7 +116,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
           IconButton(onPressed: (){}, icon: const Icon(Icons.notifications_none_rounded))
         ],
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -132,7 +149,6 @@ class _ExploreScreenState extends State<ExploreScreen> {
               ],
             ),
             const SizedBox(height: 12),
-            // Hero callouts
             Row(
               children: [
                 for (final a in heroActions)
@@ -168,7 +184,6 @@ class _ExploreScreenState extends State<ExploreScreen> {
               ],
             ),
             const SizedBox(height: 12),
-            // Feature card (vertical deck)
             SizedBox(
               height: 320,
               child: PageView.builder(
@@ -272,49 +287,52 @@ class _ExploreScreenState extends State<ExploreScreen> {
             const SizedBox(height: 8),
             if (loading) const LinearProgressIndicator(minHeight: 2),
             if (error != null && !loading)
-              Expanded(
-                child: Center(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Icon(Icons.cloud_off, size: 42, color: Colors.black26),
-                      const SizedBox(height: 8),
-                      Text(error!),
-                      const SizedBox(height: 8),
-                      OutlinedButton.icon(onPressed: _fetch, icon: const Icon(Icons.refresh), label: const Text('Retry')),
-                    ],
-                  ),
+              Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(Icons.cloud_off, size: 42, color: Colors.black26),
+                    const SizedBox(height: 8),
+                    Text(error!),
+                    const SizedBox(height: 8),
+                    OutlinedButton.icon(onPressed: _fetch, icon: const Icon(Icons.refresh), label: const Text('Retry')),
+                  ],
                 ),
               ),
             if ((error == null) && !loading)
-              Expanded(
-              child: results.isEmpty
-                ? Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(Icons.search_off, size: 42, color: Colors.black26),
-                      const SizedBox(height: 8),
-                      const Text('No places found'),
-                      const SizedBox(height: 8),
-                      const Text('Try different filters or keywords', style: TextStyle(color: Colors.black54, fontSize: 12)),
-                    ],
-                  )
-                : GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 12,
-                  mainAxisSpacing: 12,
-                  childAspectRatio: 0.70,
-                ),
-                itemCount: results.length,
-                itemBuilder: (c,i){
-                  final p = results[i];
-                  return PlaceCard(place: p, onTap: (){
-                    Navigator.push(c, MaterialPageRoute(builder: (_) => PlaceDetailsScreen(place: p)));
-                  });
+              Builder(
+                builder: (context){
+                  if (results.isEmpty) {
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Icon(Icons.search_off, size: 42, color: Colors.black26),
+                        SizedBox(height: 8),
+                        Text('No places found'),
+                        SizedBox(height: 8),
+                        Text('Try different filters or keywords', style: TextStyle(color: Colors.black54, fontSize: 12)),
+                      ],
+                    );
+                  }
+                  return GridView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 12,
+                      mainAxisSpacing: 12,
+                      childAspectRatio: 0.70,
+                    ),
+                    itemCount: results.length,
+                    itemBuilder: (c,i){
+                      final p = results[i];
+                      return PlaceCard(place: p, onTap: (){
+                        Navigator.push(c, MaterialPageRoute(builder: (_) => PlaceDetailsScreen(place: p)));
+                      });
+                    },
+                  );
                 },
               ),
-            ),
           ],
         ),
       ),

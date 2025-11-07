@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../data/mock_places.dart';
+// Removed mock data usage so lists start empty
 
 class FavoritesHistoryScreen extends StatefulWidget {
   const FavoritesHistoryScreen({super.key});
@@ -40,12 +40,13 @@ class _FavoritesHistoryScreenState extends State<FavoritesHistoryScreen> with Si
       body: TabBarView(
         controller: _tab,
         children: [
-          _List(
-            items: mockPlaces.map((p)=>_Item(title: p.name, subtitle: p.description, img: p.images.first)).toList(),
-            showFooter: true,
+          const _List(
+            items: <_Item>[],
+            showFooter: false,
           ),
-          _List(
-            items: mockPlaces.reversed.map((p)=>_Item(title: p.name, subtitle: p.category, img: p.images.first)).toList(),
+          const _List(
+            items: <_Item>[],
+            showFooter: false,
           ),
         ],
       ),
