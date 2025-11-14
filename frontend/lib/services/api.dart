@@ -17,7 +17,7 @@ class ApiService {
   }
 
   Future<List<Place>> search({required String query, String? city = 'Kolkata', String? type, int k = 20}) async {
-    final uri = Uri.parse('$baseUrl/search');
+    final uri = Uri.parse('$baseUrl/search.php');
     final res = await http.post(uri, headers: {'Content-Type': 'application/json'}, body: jsonEncode({
       'query': query,
       'city': city,
@@ -98,12 +98,14 @@ class ApiService {
     throw Exception('route_suggestions failed: ${res.statusCode} ${res.body}');
   }
 
-  Future<List<Place>> getPlaces({String? city = 'Kolkata', String? type}) async {
+  Future<List<Place>> getPlaces({String? city = 'Kolkata', String? type, int page = 1, int pageSize = 20}) async {
     final q = {
       if (city != null) 'city': city,
       if (type != null) 'type': type,
+      'page': '$page',
+      'page_size': '$pageSize',
     };
-    final uri = Uri.parse('$baseUrl/places').replace(queryParameters: q);
+    final uri = Uri.parse('$baseUrl/places.php').replace(queryParameters: q);
     final res = await http.get(uri);
     if (res.statusCode >= 200 && res.statusCode < 300) {
       final data = jsonDecode(res.body) as Map<String, dynamic>;
@@ -122,5 +124,29 @@ class ApiService {
       return list.map((e) => Place.fromJson(e as Map<String, dynamic>)).toList();
     }
     throw Exception('similar failed: ${res.statusCode} ${res.body}');
+  }
+
+  Future<List<Place>> recommend({
+    required double userLat,
+    required double userLng,
+    int k = 12,
+    List<String>? tags,
+    String? category,
+  }) async {
+    final uri = Uri.parse('$baseUrl/recommend.php');
+    final payload = <String, dynamic>{
+      'user_lat': userLat,
+      'user_lng': userLng,
+      'k': k,
+      if (tags != null) 'tags': tags,
+      if (category != null) 'category': category,
+    };
+    final res = await http.post(uri, headers: {'Content-Type': 'application/json'}, body: jsonEncode(payload));
+    if (res.statusCode >= 200 && res.statusCode < 300) {
+      final data = jsonDecode(res.body) as Map<String, dynamic>;
+      final list = (data['results'] as List? ?? []);
+      return list.map((e) => Place.fromJson(e as Map<String, dynamic>)).toList();
+    }
+    throw Exception('recommend failed: ${res.statusCode} ${res.body}');
   }
 }

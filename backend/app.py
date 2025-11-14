@@ -1,6 +1,12 @@
 from flask import Flask, request, jsonify
-from utils.rag_pipeline import RAGPipeline
-from utils.personalize import PreferenceStore
+from backend.utils.rag_pipeline import RAGPipeline
+from backend.utils.personalize import PreferenceStore
+from backend.db import enable_db, SessionLocal
+from backend.repository import (
+    get_places as repo_get_places,
+    search_places as repo_search_places,
+    recommend_places as repo_recommend_places,
+)
 import os, math, time
 try:
     import requests  # optional for local LLM via Ollama
@@ -26,19 +32,58 @@ def search():
     data = request.get_json(silent=True) or {}
     q = data.get('query', '')
     k = int(data.get('k', 8))
+    category = data.get('type') or data.get('category')
     city = data.get('city')
-    typ = data.get('type')
     user_lat = data.get('user_lat')
     user_lng = data.get('user_lng')
-    results = rag.search(q, k=k, city=city, typ=typ, user_lat=user_lat, user_lng=user_lng)
+
+    if enable_db:
+        with SessionLocal() as db:
+            items = repo_search_places(db, q, k, category)
+        return jsonify({'results': items})
+    # JSON/FAISS fallback
+    results = rag.search(q, k=k, city=city, typ=category, user_lat=user_lat, user_lng=user_lng)
+    return jsonify({'results': results})
+
+@app.post('/recommend')
+def recommend():
+    data = request.get_json(silent=True) or {}
+    user_lat = data.get('user_lat')
+    user_lng = data.get('user_lng')
+    k = int(data.get('k') or 10)
+    tags = data.get('tags') or data.get('intent') or []
+    category = data.get('category') or data.get('type')
+
+    try:
+        user_lat = float(user_lat)
+        user_lng = float(user_lng)
+    except Exception:
+        return jsonify({'results': [], 'error': 'user_lat and user_lng required'}), 400
+
+    if enable_db:
+        with SessionLocal() as db:
+            items = repo_recommend_places(db, user_lat, user_lng, k=k, include_tags=(tags if isinstance(tags, list) else [str(tags)]), category=category)
+        return jsonify({'results': items})
+    # Fallback: use existing rag search without a query, distance-sort client side already happens
+    results = rag.search('', k=k, user_lat=user_lat, user_lng=user_lng, city=data.get('city'), typ=category)
     return jsonify({'results': results})
 
 @app.get('/places')
 def places():
     city = request.args.get('city')
-    typ = request.args.get('type')
-    results = rag.search('', k=100, city=city, typ=typ)
-    return jsonify({'results': results})
+    category = request.args.get('type') or request.args.get('category')
+    subcategory = request.args.get('subcategory')
+    page = int(request.args.get('page') or 1)
+    page_size = int(request.args.get('page_size') or 20)
+
+    if enable_db:
+        with SessionLocal() as db:
+            items, total = repo_get_places(db, category, subcategory, page, page_size)
+        return jsonify({'results': items, 'page': page, 'page_size': page_size, 'total': total})
+
+    # JSON/FAISS fallback (no true pagination)
+    results = rag.search('', k=100, city=city, typ=category)
+    return jsonify({'results': results, 'page': 1, 'page_size': len(results), 'total': len(results)})
 
 @app.get('/cities')
 def cities():

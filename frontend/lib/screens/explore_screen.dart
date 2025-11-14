@@ -7,6 +7,7 @@ import 'place_details_screen.dart';
 import '../widgets/prefs_sheet.dart';
 import 'profile_screen.dart';
 import '../state/prefs.dart';
+import '../config.dart';
 
 class ExploreScreen extends StatefulWidget {
   const ExploreScreen({super.key});
@@ -24,6 +25,9 @@ class _ExploreScreenState extends State<ExploreScreen> {
   bool loading = false;
   String? error;
   Timer? _debounce;
+  late final PageController _featureCtrl;
+  Timer? _featureTicker;
+  Timer? _refreshTicker;
 
   // MIX: hero callouts + vertical feature cards + one horizontal carousel
   final List<Map<String, String>> heroActions = const [
@@ -42,11 +46,34 @@ class _ExploreScreenState extends State<ExploreScreen> {
 
   List<Place> get results => remote;
 
+  String? _mapFilterToCategory(String f) {
+    switch (f) {
+      case 'All':
+        return null;
+      case 'Food':
+        return 'Food & Drink';
+      case 'History':
+        return 'Historic';
+      case 'Parks':
+        return 'Park';
+      case 'Religious':
+        return 'Temple';
+      default:
+        return f; // Art, Landmark, etc. pass through
+    }
+  }
+
   Future<void> _fetch() async {
     setState(()=>loading=true);
     try {
-      final type = selected == 'All' ? null : selected;
-      final res = await api.search(query: query.isEmpty ? 'Kolkata' : query, city: 'Kolkata', type: type);
+      List<Place> res;
+      if (query.isEmpty) {
+        final mapped = _mapFilterToCategory(selected);
+        res = await api.getPlaces(city: 'Kolkata', type: mapped, page: 1, pageSize: 48);
+      } else {
+        final type = _mapFilterToCategory(selected);
+        res = await api.search(query: query, city: 'Kolkata', type: type, k: 40);
+      }
       setState((){ remote = res; error = null; });
     } catch (e) {
       setState(()=>error = 'Backend unavailable');
@@ -59,8 +86,36 @@ class _ExploreScreenState extends State<ExploreScreen> {
   void initState() {
     super.initState();
     loadPrefs();
+    _featureCtrl = PageController(viewportFraction: 0.92);
     _fetch();
     _warmupPrompts();
+    _loadFeature(featureIndex);
+    _loadForYouRecommend();
+    _featureTicker?.cancel();
+    _featureTicker = Timer.periodic(const Duration(seconds: 12), (_) {
+      if (!mounted) return;
+      final next = (featureIndex + 1) % featureDeck.length;
+      setState(() => featureIndex = next);
+      _featureCtrl.hasClients
+          ? _featureCtrl.animateToPage(next, duration: const Duration(milliseconds: 360), curve: Curves.easeOut)
+          : null;
+      _loadFeature(next);
+    });
+    _refreshTicker?.cancel();
+    _refreshTicker = Timer.periodic(const Duration(seconds: 45), (_) {
+      if (!mounted) return;
+      _fetch();
+      _loadFeature(featureIndex);
+    });
+  }
+
+  @override
+  void dispose() {
+    _debounce?.cancel();
+    _featureTicker?.cancel();
+    _refreshTicker?.cancel();
+    _featureCtrl.dispose();
+    super.dispose();
   }
 
   Future<void> _warmupPrompts() async {}
@@ -74,6 +129,15 @@ class _ExploreScreenState extends State<ExploreScreen> {
       setState(() { error = 'Backend unavailable'; });
     } finally {
       if (mounted) setState(() { loading = false; });
+    }
+  }
+
+  Future<void> _loadForYouRecommend() async {
+    try {
+      final recs = await api.recommend(userLat: DEV_LAT, userLng: DEV_LNG, k: 12);
+      if (mounted) setState(() { forYou = recs; _forYouQuery = null; });
+    } catch (_) {
+      // ignore, keep existing forYou
     }
   }
 
@@ -189,7 +253,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
               child: PageView.builder(
                 onPageChanged: (i){ setState(()=>featureIndex=i); _loadFeature(i); },
                 itemCount: featureDeck.length,
-                controller: PageController(viewportFraction: 0.92),
+                controller: _featureCtrl,
                 itemBuilder: (c, i){
                   final label = featureDeck[i]['label']!;
                   return Container(
