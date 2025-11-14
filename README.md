@@ -28,6 +28,15 @@ frontend/
       place_card.dart
       chat_bubble.dart
 
+php_api/
+  config.php                 # DB credentials for MySQL
+  lib.php                    # Helpers (DB, JSON formatting, utils)
+  schema.sql                 # MySQL schema for places and images
+  places.php                 # GET /places with pagination/filters
+  search.php                 # POST /search keyword search
+  recommend.php              # POST /recommend location-aware
+  admin_ingest_json.php      # Optional JSON → DB one-time ingest
+
 data_collection/
   kolkata_places.xlsx        # Original Excel source (add yours)
   sample_template.xlsx       # Template columns
@@ -38,7 +47,25 @@ Note: The original Flutter app remains under the root `lib/` for now. We will mi
 
 ## Quick Start
 
-### Backend
+### Backend (Option A: PHP + MySQL with XAMPP)
+1. Ensure MySQL + Apache are running (XAMPP/MAMP/etc.).
+2. Copy `php_api/` into your web root as `htdocs/api` (so endpoints are at `http://localhost/api/*.php`).
+3. Edit `php_api/config.php` with your DB creds (default XAMPP: user `root`, empty password) and database `kolkata_ai`.
+4. Create schema and indexes in MySQL:
+   - In phpMyAdmin: import `php_api/schema.sql` into the `kolkata_ai` database.
+5. Seed data (either):
+   - Import your SQL dump with initial rows (e.g., places 1–21) into `kolkata_ai.places`.
+   - Or run `php_api/admin_ingest_json.php` once (if served under Apache: open `http://localhost/api/admin_ingest_json.php`).
+6. Test endpoints in a browser:
+   - `http://localhost/api/places.php?page=1&page_size=12`
+   - `http://localhost/api/search.php` (POST JSON: `{ "query": "museum" }`)
+   - `http://localhost/api/recommend.php` (POST JSON: `{ "lat": 22.57, "lng": 88.35 }`)
+
+Notes:
+- Android emulator must call host at `http://10.0.2.2/api` instead of `http://localhost/api`.
+- Pagination params: `page`, `page_size` (default 20, max 100).
+
+### Backend (Option B: Python Flask)
 1. Create a venv and install deps:
    ```bash
    python -m venv .venv && source .venv/bin/activate
@@ -56,11 +83,19 @@ Note: The original Flutter app remains under the root `lib/` for now. We will mi
    cd frontend
    flutter pub get
    ```
-2. Run:
+2. Run against the PHP API
+   - iOS/simulator/macOS/web:
+     ```bash
+     flutter run --dart-define=BACKEND_BASE_URL=http://localhost/api
+     ```
+   - Android emulator:
+     ```bash
+     flutter run --dart-define=BACKEND_BASE_URL=http://10.0.2.2/api
+     ```
+
+   For web explicitly:
    ```bash
-   flutter run
-   # or for web
-   flutter run -d chrome
+   flutter run -d chrome --dart-define=BACKEND_BASE_URL=http://localhost/api
    ```
 
 ## Data Conversion
@@ -73,3 +108,14 @@ python backend/utils/data_converter.py --src data_collection/kolkata_places.xlsx
 - Replace mock "map" with a real map package.
 - Wire frontend chat to backend `/chat` and `/search` endpoints.
 - Decide on final folder (root lib vs frontend/lib) and remove duplicates.
+
+## API Reference (PHP)
+- GET `/api/places.php`
+  - Query: `page`, `page_size`, optional `type` (aka category), `subcategory`
+  - Response: `{ results: [...], page, page_size, total }`
+- POST `/api/search.php`
+  - Body: `{ query: string, category?: string, k?: number }`
+- POST `/api/recommend.php`
+  - Body: `{ lat: number, lng: number, tags?: string[], category?: string, k?: number }`
+
+Compatibility: the API accepts `sentiment_tags` as JSON array or comma-separated string and derives `image` from `place_images` or `image_urls`.
