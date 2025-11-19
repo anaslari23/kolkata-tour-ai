@@ -33,7 +33,7 @@ class ApiService {
   }
 
   Future<Message> chat(String message, {String? city = 'Kolkata', String userId = 'A123', int? hour}) async {
-    final uri = Uri.parse('$baseUrl/chat');
+    final uri = Uri.parse('$baseUrl/chat.php');
     final res = await http.post(uri, headers: {'Content-Type': 'application/json'}, body: jsonEncode({
       'message': message,
       'city': city,
@@ -113,6 +113,20 @@ class ApiService {
       return list.map((e) => Place.fromJson(e as Map<String, dynamic>)).toList();
     }
     throw Exception('getPlaces failed: ${res.statusCode} ${res.body}');
+  }
+
+  Future<List<Place>> getAllPlaces({String? city = 'Kolkata', String? type, int maxItems = 500}) async {
+    final List<Place> all = [];
+    int page = 1;
+    const int pageSize = 100; // backend max is 100
+    while (all.length < maxItems) {
+      final batch = await getPlaces(city: city, type: type, page: page, pageSize: pageSize);
+      if (batch.isEmpty) break;
+      all.addAll(batch);
+      if (batch.length < pageSize) break; // no more pages
+      page += 1;
+    }
+    return all.take(maxItems).toList();
   }
 
   Future<List<Place>> similar(String id, {int k = 8}) async {

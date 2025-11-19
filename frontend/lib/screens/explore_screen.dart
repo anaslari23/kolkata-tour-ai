@@ -69,7 +69,8 @@ class _ExploreScreenState extends State<ExploreScreen> {
       List<Place> res;
       if (query.isEmpty) {
         final mapped = _mapFilterToCategory(selected);
-        res = await api.getPlaces(city: 'Kolkata', type: mapped, page: 1, pageSize: 48);
+        // Fetch all pages to show more results on Explore
+        res = await api.getAllPlaces(city: 'Kolkata', type: mapped, maxItems: 500);
       } else {
         final type = _mapFilterToCategory(selected);
         res = await api.search(query: query, city: 'Kolkata', type: type, k: 40);

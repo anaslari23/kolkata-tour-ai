@@ -10,19 +10,40 @@ $category = isset($input['type']) ? trim($input['type']) : (isset($input['catego
 $where = [];
 $args = [];
 if ($q !== '') {
-  $where[] = '(name LIKE :q OR description LIKE :q OR category LIKE :q OR subcategory LIKE :q)';
-  $args[':q'] = "%$q%";
+  $where[] = '(name LIKE :q_any OR description LIKE :q_any OR category LIKE :q_any OR subcategory LIKE :q_any OR sentiment_tags LIKE :q_json OR sentiment_tags LIKE :q_csv)';
+  $args[':q_any'] = "%$q%";
+  $args[':q_json'] = "%\"$q\"%"; // match JSON string value in array
+  $args[':q_csv'] = "%$q%";         // match CSV/plain text
 }
 if ($category) {
-  $where[] = '(category LIKE :cat OR subcategory LIKE :cat OR JSON_SEARCH(sentiment_tags, "one", :cat2) IS NOT NULL)';
+  $where[] = '(category LIKE :cat OR subcategory LIKE :cat OR sentiment_tags LIKE :cat_json OR sentiment_tags LIKE :cat_csv)';
   $args[':cat'] = "%$category%";
-  $args[':cat2'] = $category;
+  $args[':cat_json'] = "%\"$category\"%";
+  $args[':cat_csv'] = "%$category%";
 }
 $whereSql = $where ? ('WHERE ' . implode(' AND ', $where)) : '';
 
-$sql = "SELECT * FROM places $whereSql ORDER BY name ASC LIMIT :lim";
+$sql = "SELECT p.*, 
+  (
+    (CASE WHEN p.name = :q_exact THEN 100 ELSE 0 END) +
+    (CASE WHEN p.name LIKE :q_prefix THEN 60 ELSE 0 END) +
+    (CASE WHEN p.name LIKE :q_any2 THEN 40 ELSE 0 END) +
+    (CASE WHEN (p.category LIKE :q_any2 OR p.subcategory LIKE :q_any2) THEN 25 ELSE 0 END) +
+    (CASE WHEN p.sentiment_tags LIKE :q_json2 OR p.sentiment_tags LIKE :q_csv2 THEN 30 ELSE 0 END) +
+    (CASE WHEN p.description LIKE :q_any2 THEN 20 ELSE 0 END)
+  ) AS score
+FROM places p
+$whereSql
+ORDER BY score DESC, p.name ASC
+LIMIT :lim";
 $stmt = $pdo->prepare($sql);
 foreach ($args as $k2=>$v) { $stmt->bindValue($k2, $v); }
+// scoring params (safe even if q is empty; values won't be used when q is empty)
+$stmt->bindValue(':q_exact', $q);
+$stmt->bindValue(':q_prefix', $q !== '' ? ($q.'%') : '');
+$stmt->bindValue(':q_any2', "%$q%");
+$stmt->bindValue(':q_json2', "%\"$q\"%");
+$stmt->bindValue(':q_csv2', "%$q%");
 $stmt->bindValue(':lim', $k, PDO::PARAM_INT);
 $stmt->execute();
 $rows = $stmt->fetchAll();

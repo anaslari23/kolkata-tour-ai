@@ -28,6 +28,7 @@ def health():
     return {'status': 'ok'}
 
 @app.post('/search')
+@app.post('/search.php')
 def search():
     data = request.get_json(silent=True) or {}
     q = data.get('query', '')
@@ -46,6 +47,7 @@ def search():
     return jsonify({'results': results})
 
 @app.post('/recommend')
+@app.post('/recommend.php')
 def recommend():
     data = request.get_json(silent=True) or {}
     user_lat = data.get('user_lat')
@@ -69,6 +71,7 @@ def recommend():
     return jsonify({'results': results})
 
 @app.get('/places')
+@app.get('/places.php')
 def places():
     city = request.args.get('city')
     category = request.args.get('type') or request.args.get('category')
@@ -78,7 +81,7 @@ def places():
 
     if enable_db:
         with SessionLocal() as db:
-            items, total = repo_get_places(db, category, subcategory, page, page_size)
+            items = repo_get_places(db, category, subcategory, page, page_size)
         return jsonify({'results': items, 'page': page, 'page_size': page_size, 'total': total})
 
     # JSON/FAISS fallback (no true pagination)
@@ -305,7 +308,7 @@ def _llm_chat_ollama(user_msg: str, context_items, user_pref, hour):
         prompt = (
             "You are a seasoned Kolkata driver. Be concise, warm, and local. "
             "Suggest interesting stops on the way in 2 short sentences max. "
-            f"Consider preferences: {prefs_text}. Context: {ctx}. "
+            "Consider preferences: {prefs_text}. Context: {ctx}. "
             f"Candidate stops: {names}. "
             + ("If a tea stall is relevant, mention exactly one." if tea_present else "")
         )

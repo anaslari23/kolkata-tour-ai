@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import '../models/place.dart';
@@ -27,6 +28,7 @@ class _MapScreenState extends State<MapScreen> {
   String _query = '';
   final PageController _pageCtrl = PageController(viewportFraction: 0.86);
   int _currentIdx = 0;
+  Timer? _searchDebounce;
 
   @override
   void initState() {
@@ -38,6 +40,7 @@ class _MapScreenState extends State<MapScreen> {
 
   @override
   void dispose() {
+    _searchDebounce?.cancel();
     _pageCtrl.dispose();
     super.dispose();
   }
@@ -66,7 +69,7 @@ class _MapScreenState extends State<MapScreen> {
   Future<void> _load() async {
     setState(()=>loading=true);
     try {
-      final res = await api.getPlaces(city: 'Kolkata');
+      final res = await api.getPlaces(city: 'Kolkata', page: 1, pageSize: 200);
       setState(() { places = res; error = null; });
     } catch (e) {
       setState(() { error = 'Failed to load places'; });
@@ -96,7 +99,10 @@ class _MapScreenState extends State<MapScreen> {
     }
 
     final markers = <Marker>{};
-    for (final p in filtered) {
+    final sourceForMarkers = filtered.isNotEmpty || _query.isNotEmpty
+        ? filtered
+        : places.where((p)=>p.lat!=0 && p.lng!=0).toList();
+    for (final p in sourceForMarkers) {
       final m = Marker(
         markerId: MarkerId(p.id),
         position: LatLng(p.lat, p.lng),
@@ -147,7 +153,13 @@ class _MapScreenState extends State<MapScreen> {
                         border: InputBorder.none,
                         contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                       ),
-                      onChanged: (v){ setState(()=>_query=v); },
+                      onChanged: (v){
+                        _searchDebounce?.cancel();
+                        _searchDebounce = Timer(const Duration(milliseconds: 280), (){
+                          if (!mounted) return;
+                          setState(()=>_query=v);
+                        });
+                      },
                     ),
                   ),
                   const SizedBox(height: 10),

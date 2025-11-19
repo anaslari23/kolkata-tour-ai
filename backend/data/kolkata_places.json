@@ -1,340 +1,743 @@
 [
     {
-        "ID":1,
-        "Name":"Victoria Memorial",
-        "Category & Subcategory":"Landmark, Museum",
-        "Description":"A grand marble museum dedicated to Queen Victoria.",
-        "History":"Built between 1906\u20131921 during British rule.",
-        "Nearby Recommendations":"Birla Planetarium, Maidan tea stalls",
-        "Personal Tips":"Visit during sunset for best photos.",
-        "Latitude":22.5448,
-        "Longitude":88.3426,
-        "Opening Hours, Price, Best Time":"10:00\u201317:00, \u20b930, Oct\u2013Mar",
-        "Past Events":"Light & sound shows",
-        "Sentiment Tags":"heritage, photography, peaceful",
-        "Image URLs":"",
-        "Source URL":"https:\/\/en.wikipedia.org\/wiki\/Victoria_Memorial,_Kolkata"
-    },
-    {
-        "ID":2,
-        "Name":"Howrah Bridge",
-        "Category & Subcategory":"Landmark, Bridge",
-        "Description":"Iconic cantilever bridge connecting Kolkata and Howrah.",
-        "History":"Opened in 1943, one of the busiest bridges in the world.",
-        "Nearby Recommendations":"Prinsep Ghat, Flower Market",
-        "Personal Tips":"Best viewed at dawn or dusk.",
-        "Latitude":22.5958,
-        "Longitude":88.3095,
-        "Opening Hours, Price, Best Time":"Open 24h, Free, Anytime",
-        "Past Events":"Featured in Bollywood movies",
-        "Sentiment Tags":"iconic, river-view, busy",
-        "Image URLs":"",
-        "Source URL":"https:\/\/en.wikipedia.org\/wiki\/Howrah_Bridge"
-    },
-    {
-        "ID":3,
-        "Name":"Indian Museum",
-        "Category & Subcategory":"Museum, History",
-        "Description":"Oldest and largest museum in India.",
-        "History":"Founded in 1814; holds rare artifacts including Egyptian mummies.",
-        "Nearby Recommendations":"Park Street cafes",
-        "Personal Tips":"Allocate 2\u20133 hours; avoid Mondays (closed).",
-        "Latitude":22.5725,
-        "Longitude":88.348,
-        "Opening Hours, Price, Best Time":"10:00\u201317:00, \u20b950, Oct\u2013Mar",
-        "Past Events":"Temporary exhibitions",
-        "Sentiment Tags":"educational, historical, family",
-        "Image URLs":"",
-        "Source URL":"https:\/\/en.wikipedia.org\/wiki\/Indian_Museum,_Kolkata"
-    },
-    {
-        "ID":4,
-        "Name":"Park Street",
-        "Category & Subcategory":"Area, Food & Nightlife",
-        "Description":"Popular street filled with restaurants, pubs, and shops.",
-        "History":"Colonial-era street turned modern hub.",
-        "Nearby Recommendations":"Flurys, Mocambo, Peter Cat",
-        "Personal Tips":"Visit during Christmas for lights.",
-        "Latitude":22.5492,
-        "Longitude":88.3494,
-        "Opening Hours, Price, Best Time":"All day, Variable, Dec evenings",
-        "Past Events":"Christmas carnivals",
-        "Sentiment Tags":"vibrant, nightlife, festive",
-        "Image URLs":"",
-        "Source URL":"https:\/\/en.wikipedia.org\/wiki\/Park_Street,_Kolkata"
-    },
-    {
-        "ID":5,
-        "Name":"New Market (Hogg Market)",
-        "Category & Subcategory":"Market, Shopping",
-        "Description":"Historic shopping arcade from the British era.",
-        "History":"Built in 1874; known for variety of goods.",
-        "Nearby Recommendations":"Nahoum\u2019s Bakery, Chowringhee",
-        "Personal Tips":"Great for souvenirs; bargain prices.",
-        "Latitude":22.5465,
-        "Longitude":88.344,
-        "Opening Hours, Price, Best Time":"10:00\u201320:00, Free, All year",
-        "Past Events":"Festive crowds during Durga Puja",
-        "Sentiment Tags":"shopping, local, street-food",
-        "Image URLs":"",
-        "Source URL":"https:\/\/en.wikipedia.org\/wiki\/New_Market,_Kolkata"
-    },
-    {
-        "ID":6,
-        "Name":"Birla Mandir",
-        "Category & Subcategory":"Landmark, Temple",
-        "Description":"Modern white marble temple built by Birla family.",
-        "History":"Completed in 1996, dedicated to Lord Krishna & Rama.",
-        "Nearby Recommendations":"Ballygunge cafes",
-        "Personal Tips":"Dress modestly and visit during evening aarti.",
-        "Latitude":22.533,
-        "Longitude":88.3553,
-        "Opening Hours, Price, Best Time":"05:30\u201311:00, 16:30\u201321:00, Free",
-        "Past Events":"Janmashtami festival",
-        "Sentiment Tags":"spiritual, serene, architecture",
-        "Image URLs":"",
-        "Source URL":"https:\/\/en.wikipedia.org\/wiki\/Birla_Mandir,_Kolkata"
-    },
-    {
-        "ID":7,
-        "Name":"Science City",
-        "Category & Subcategory":"Museum, Science",
-        "Description":"India\u2019s largest science centre.",
-        "History":"Opened in 1997 to promote interactive science learning.",
-        "Nearby Recommendations":"E.M. Bypass eateries",
-        "Personal Tips":"Best for kids and families; weekdays less crowded.",
-        "Latitude":22.5512,
-        "Longitude":88.4251,
-        "Opening Hours, Price, Best Time":"09:00\u201318:00, \u20b970, All year",
-        "Past Events":"Science fairs",
-        "Sentiment Tags":"educational, family, interactive",
-        "Image URLs":"",
-        "Source URL":"https:\/\/en.wikipedia.org\/wiki\/Science_City,_Kolkata"
-    },
-    {
-        "ID":8,
-        "Name":"Maidan",
-        "Category & Subcategory":"Park, Recreation",
-        "Description":"Kolkata\u2019s largest open park known as city lungs.",
-        "History":"Laid out during British era, used for sports and parades.",
-        "Nearby Recommendations":"Eden Gardens, Shaheed Minar",
-        "Personal Tips":"Early morning walk recommended.",
-        "Latitude":22.5685,
-        "Longitude":88.3452,
-        "Opening Hours, Price, Best Time":"Open 24h, Free, Nov\u2013Feb",
-        "Past Events":"Political rallies",
-        "Sentiment Tags":"open-space, jogging, nature",
-        "Image URLs":"",
-        "Source URL":"https:\/\/en.wikipedia.org\/wiki\/Maidan_(Kolkata)"
-    },
-    {
-        "ID":9,
-        "Name":"Prinsep Ghat",
-        "Category & Subcategory":"Landmark, Riverside",
-        "Description":"Colonial ghat by the Hooghly river.",
-        "History":"Built in 1841 to honor James Prinsep.",
-        "Nearby Recommendations":"Riverfront cafes, Howrah Bridge view",
-        "Personal Tips":"Best at sunset; take a boat ride.",
-        "Latitude":22.5505,
-        "Longitude":88.3348,
-        "Opening Hours, Price, Best Time":"All day, Free, Evening",
-        "Past Events":"River festivals",
-        "Sentiment Tags":"romantic, scenic, sunset",
-        "Image URLs":"",
-        "Source URL":"https:\/\/en.wikipedia.org\/wiki\/Prinsep_Ghat"
-    },
-    {
-        "ID":10,
-        "Name":"Dakshineswar Kali Temple",
-        "Category & Subcategory":"Temple, Pilgrimage",
-        "Description":"Famous temple dedicated to Goddess Kali.",
-        "History":"Built in 1855 by Rani Rashmoni; associated with Ramakrishna.",
-        "Nearby Recommendations":"Bally bridge stalls",
-        "Personal Tips":"Avoid Sundays due to heavy crowd.",
-        "Latitude":22.6544,
-        "Longitude":88.3571,
-        "Opening Hours, Price, Best Time":"05:00\u201322:00, Free, Oct\u2013Mar",
-        "Past Events":"Religious festivals",
-        "Sentiment Tags":"spiritual, devotional, heritage",
-        "Image URLs":"",
-        "Source URL":"https:\/\/en.wikipedia.org\/wiki\/Dakshineswar_Kali_Temple"
-    },
-    {
-        "ID":11,
-        "Name":"Belur Math",
-        "Category & Subcategory":"Temple, Cultural",
-        "Description":"Headquarters of Ramakrishna Mission across river.",
-        "History":"Established by Swami Vivekananda in 1897.",
-        "Nearby Recommendations":"Dakshineswar Temple (boat route)",
-        "Personal Tips":"Go before sunset for calm atmosphere.",
-        "Latitude":22.6326,
-        "Longitude":88.356,
-        "Opening Hours, Price, Best Time":"06:00\u201312:00, 16:00\u201320:30, Free",
-        "Past Events":"Ramakrishna Jayanti",
-        "Sentiment Tags":"peaceful, architecture, river",
-        "Image URLs":"",
-        "Source URL":"https:\/\/en.wikipedia.org\/wiki\/Belur_Math"
-    },
-    {
-        "ID":12,
-        "Name":"Eden Gardens",
-        "Category & Subcategory":"Stadium, Sports",
-        "Description":"Historic cricket stadium.",
-        "History":"Established in 1864; hosted major international matches.",
-        "Nearby Recommendations":"Maidan, Victoria Memorial",
-        "Personal Tips":"Check match schedules; guided tours available.",
-        "Latitude":22.5646,
-        "Longitude":88.3433,
-        "Opening Hours, Price, Best Time":"Match days, Ticketed",
-        "Past Events":"Cricket World Cups",
-        "Sentiment Tags":"sports, crowd, excitement",
-        "Image URLs":"",
-        "Source URL":"https:\/\/en.wikipedia.org\/wiki\/Eden_Gardens"
-    },
-    {
-        "ID":13,
-        "Name":"South Park Street Cemetery",
-        "Category & Subcategory":"Heritage, Cemetery",
-        "Description":"18th-century colonial cemetery.",
-        "History":"Opened in 1767, contains British tombs.",
-        "Nearby Recommendations":"Park Street caf\u00e9s",
-        "Personal Tips":"Calm and eerie place; photography allowed.",
-        "Latitude":22.544,
-        "Longitude":88.3508,
-        "Opening Hours, Price, Best Time":"09:00\u201317:00, \u20b920, Winter",
-        "Past Events":"Heritage walks",
-        "Sentiment Tags":"quiet, heritage, history",
-        "Image URLs":"",
-        "Source URL":"https:\/\/en.wikipedia.org\/wiki\/South_Park_Street_Cemetery"
-    },
-    {
-        "ID":14,
-        "Name":"Kalighat Temple",
-        "Category & Subcategory":"Temple, Religious",
-        "Description":"One of 51 Shakti Peeths.",
-        "History":"Believed to be over 200 years old; major pilgrimage site.",
-        "Nearby Recommendations":"Kalighat market",
-        "Personal Tips":"Avoid weekends; keep belongings safe.",
-        "Latitude":22.5186,
-        "Longitude":88.342,
-        "Opening Hours, Price, Best Time":"05:00\u201322:00, Free",
-        "Past Events":"Durga Puja",
-        "Sentiment Tags":"religious, crowded, sacred",
-        "Image URLs":"",
-        "Source URL":"https:\/\/en.wikipedia.org\/wiki\/Kalighat"
-    },
-    {
-        "ID":15,
-        "Name":"St. Paul\u2019s Cathedral",
-        "Category & Subcategory":"Church, Heritage",
-        "Description":"Anglican cathedral with Gothic architecture.",
-        "History":"Completed in 1847; designed by Major Forbes.",
-        "Nearby Recommendations":"Victoria Memorial",
-        "Personal Tips":"Visit during Christmas carols.",
-        "Latitude":22.5393,
-        "Longitude":88.3494,
-        "Opening Hours, Price, Best Time":"09:00\u201318:00, Free, Dec",
-        "Past Events":"Midnight Mass",
-        "Sentiment Tags":"peaceful, architecture, festive",
-        "Image URLs":"",
-        "Source URL":"https:\/\/en.wikipedia.org\/wiki\/St._Paul%27s_Cathedral,_Kolkata"
-    },
-    {
-        "ID":16,
-        "Name":"Eco Park",
-        "Category & Subcategory":"Park, Recreation",
-        "Description":"Largest urban park in India with theme areas and lake.",
-        "History":"Opened in 2013 in New Town.",
-        "Nearby Recommendations":"Cafe Ekante, Wax Museum",
-        "Personal Tips":"Try boating and cycling; rent e-vehicles.",
-        "Latitude":22.6037,
-        "Longitude":88.4656,
-        "Opening Hours, Price, Best Time":"14:30\u201320:30, \u20b930, Winter evenings",
-        "Past Events":"Winter carnivals",
-        "Sentiment Tags":"modern, family, entertainment",
-        "Image URLs":"",
-        "Source URL":"https:\/\/en.wikipedia.org\/wiki\/Eco_Park,_New_Town"
-    },
-    {
-        "ID":17,
-        "Name":"College Street (Boi Para)",
-        "Category & Subcategory":"Market, Books",
-        "Description":"Asia\u2019s largest second-hand book market.",
-        "History":"Developed around 19th century educational institutions.",
-        "Nearby Recommendations":"Coffee House",
-        "Personal Tips":"Carry cash; bargain politely.",
-        "Latitude":22.5746,
-        "Longitude":88.3649,
-        "Opening Hours, Price, Best Time":"10:00\u201320:00, Free, All year",
-        "Past Events":"Book fairs",
-        "Sentiment Tags":"literary, nostalgic, academic",
-        "Image URLs":"",
-        "Source URL":"https:\/\/en.wikipedia.org\/wiki\/College_Street,_Kolkata"
-    },
-    {
-        "ID":18,
-        "Name":"Rabindra Sarobar",
-        "Category & Subcategory":"Lake, Park",
-        "Description":"Manmade lake and urban park in South Kolkata.",
-        "History":"Built in 1920s as Dhakuria Lake.",
-        "Nearby Recommendations":"Cafes near Lake Gardens",
-        "Personal Tips":"Morning jog recommended; photography spots around bridge.",
-        "Latitude":22.5173,
-        "Longitude":88.3493,
-        "Opening Hours, Price, Best Time":"05:00\u201320:00, Free, Morning",
-        "Past Events":"Morning yoga groups",
-        "Sentiment Tags":"relaxing, scenic, walk",
-        "Image URLs":"",
-        "Source URL":"https:\/\/en.wikipedia.org\/wiki\/Rabindra_Sarobar"
-    },
-    {
-        "ID":19,
-        "Name":"Nandan",
-        "Category & Subcategory":"Cultural, Cinema",
-        "Description":"Cultural complex promoting Bengali films.",
-        "History":"Inaugurated in 1985 by Satyajit Ray.",
-        "Nearby Recommendations":"Academy of Fine Arts, Coffee House",
-        "Personal Tips":"Best during film festivals.",
-        "Latitude":22.5462,
-        "Longitude":88.3514,
-        "Opening Hours, Price, Best Time":"10:00\u201321:00, Ticketed",
-        "Past Events":"Kolkata Film Festival",
-        "Sentiment Tags":"art, cinema, creative",
-        "Image URLs":"",
-        "Source URL":"https:\/\/en.wikipedia.org\/wiki\/Nandan_(Kolkata)"
-    },
-    {
-        "ID":20,
-        "Name":"Nicco Park",
-        "Category & Subcategory":"Amusement Park, Family",
-        "Description":"Popular amusement park with rides and water park.",
-        "History":"Opened in 1991; known as the Disneyland of Bengal.",
-        "Nearby Recommendations":"Salt Lake cafes",
-        "Personal Tips":"Carry sunscreen; weekdays are less crowded.",
-        "Latitude":22.5716,
-        "Longitude":88.418,
-        "Opening Hours, Price, Best Time":"10:00\u201318:00, \u20b9300, Winter",
-        "Past Events":"Festivals and fairs",
-        "Sentiment Tags":"fun, kids, family",
-        "Image URLs":"",
-        "Source URL":"https:\/\/en.wikipedia.org\/wiki\/Nicco_Park"
-    },
-    {
-        "ID":21,
-        "Name":"College Street Tea Adda Spot",
-        "Category & Subcategory":"Tea Stall, Local",
-        "Description":"Beloved corner for chai and adda near College Street.",
-        "Local History":"Students have gathered here for decades swapping notes and stories.",
-        "Nearby Tea Stalls":[
-            {"name":"Paramount Sherbet","distance_km":0.4,"specialty":"daab sherbet"},
-            {"name":"Indian Coffee House","distance_km":0.6,"specialty":"filter coffee"}
+        "id": "1",
+        "name": "Victoria Memorial",
+        "category": "Landmark",
+        "subcategory": "Museum",
+        "description": "A grand marble building dedicated to Queen Victoria, surrounded by sprawling gardens.",
+        "history": "Built between 1906–1921 to commemorate Queen Victoria's 25-year reign in India. Designed by William Emerson in Indo-Saracenic revivalist style.",
+        "nearby_recommendations": [
+            "Birla Planetarium",
+            "St. Paul's Cathedral",
+            "Maidan tea stalls"
         ],
-        "Latitude":22.5749,
-        "Longitude":88.3638,
-        "Opening Hours":"08:00–21:00",
-        "Price":"₹10–₹60",
-        "Best Time":"sunset",
-        "Sentiment Tags":"tea, quiet, local",
-        "Image URLs":""
+        "personal_tips": "The best time for photos is just before sunset when the white marble glows gold. Don't miss the light and sound show in the evening.",
+        "lat": 22.5448,
+        "lng": 88.3426,
+        "opening_hours": "Museum: 10:00–17:00 (Mon closed); Gardens: 05:30–18:15",
+        "price": "Museum: ₹30 (Indians), ₹500 (Foreigners); Garden: ₹20",
+        "best_time": "October to March, late afternoon",
+        "past_events": "Hosted the G20 cultural dinner in 2023.",
+        "sentiment_tags": [
+            "heritage",
+            "photography",
+            "peaceful",
+            "romantic",
+            "iconic"
+        ],
+        "image_urls": [
+            "https://upload.wikimedia.org/wikipedia/commons/7/72/Victoria_Memorial_Kolkata_India.jpg"
+        ],
+        "source_url": "https://en.wikipedia.org/wiki/Victoria_Memorial,_Kolkata"
+    },
+    {
+        "id": "2",
+        "name": "Howrah Bridge",
+        "category": "Landmark",
+        "subcategory": "Bridge",
+        "description": "An iconic cantilever bridge spanning the Hooghly River, a symbol of Kolkata.",
+        "history": "Commissioned in 1943, it was the third-longest cantilever bridge at the time. It has no nuts and bolts; it's held together by rivets.",
+        "nearby_recommendations": [
+            "Mullick Ghat Flower Market",
+            "Prinsep Ghat"
+        ],
+        "personal_tips": "Walk across it early morning to see the city wake up. Avoid peak hours if you dislike crowds.",
+        "lat": 22.5851,
+        "lng": 88.3468,
+        "opening_hours": "Open 24 hours",
+        "price": "Free",
+        "best_time": "Dawn or Dusk",
+        "past_events": "Featured in films like 'Lion' and 'Yuva'.",
+        "sentiment_tags": [
+            "iconic",
+            "busy",
+            "river-view",
+            "chaos",
+            "engineering"
+        ],
+        "image_urls": [
+            "https://upload.wikimedia.org/wikipedia/commons/d/d0/Howrah_Bridge_2020.jpg"
+        ],
+        "source_url": "https://en.wikipedia.org/wiki/Howrah_Bridge"
+    },
+    {
+        "id": "3",
+        "name": "Indian Museum",
+        "category": "Museum",
+        "subcategory": "History",
+        "description": "The oldest and largest museum in India, housing rare antiques, armor, and fossils.",
+        "history": "Founded in 1814 by the Asiatic Society of Bengal. It has a rare collection of Egyptian mummies.",
+        "nearby_recommendations": [
+            "Park Street",
+            "New Market"
+        ],
+        "personal_tips": "It's huge! Focus on the Archaeology and Art sections if you are short on time. The Egyptian mummy is a must-see.",
+        "lat": 22.5579,
+        "lng": 88.3511,
+        "opening_hours": "10:00–17:00 (Mon closed)",
+        "price": "₹75 (Indians), ₹500 (Foreigners)",
+        "best_time": "Afternoon (good for escaping heat)",
+        "past_events": "Bicentenary celebrations in 2014.",
+        "sentiment_tags": [
+            "educational",
+            "historical",
+            "family",
+            "ancient",
+            "indoor"
+        ],
+        "image_urls": [
+            "https://upload.wikimedia.org/wikipedia/commons/6/6a/Indian_Museum_Kolkata.jpg"
+        ],
+        "source_url": "https://en.wikipedia.org/wiki/Indian_Museum,_Kolkata"
+    },
+    {
+        "id": "4",
+        "name": "College Street Coffee House",
+        "category": "Food & Drink",
+        "subcategory": "Cafe",
+        "description": "A historic cafe that has been the hub of Kolkata's intelligentsia for decades.",
+        "history": "Originally Albert Hall, founded in 1876. It became the meeting place for poets, artists, and revolutionaries like Satyajit Ray and Amartya Sen.",
+        "nearby_recommendations": [
+            "College Street Book Market",
+            "Presidency University"
+        ],
+        "personal_tips": "Don't expect quick service or luxury. Go for the 'adda' (chat) and nostalgia. Try the Cold Coffee and Mutton Afgani.",
+        "lat": 22.5759,
+        "lng": 88.3643,
+        "opening_hours": "09:00–21:00",
+        "price": "₹200 for two",
+        "best_time": "Evening for the buzz",
+        "past_events": "Countless literary debates and book launches.",
+        "sentiment_tags": [
+            "nostalgic",
+            "intellectual",
+            "crowded",
+            "cheap",
+            "cultural"
+        ],
+        "image_urls": [
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Coffee_House_Kolkata.jpg/1200px-Coffee_House_Kolkata.jpg"
+        ],
+        "source_url": "https://en.wikipedia.org/wiki/Indian_Coffee_House"
+    },
+    {
+        "id": "5",
+        "name": "Kumartuli",
+        "category": "Cultural",
+        "subcategory": "Artisan District",
+        "description": "A traditional potters' quarter where clay idols of gods and goddesses are made.",
+        "history": "The settlement dates back to the British era. It is famous for sculpting idols for Durga Puja.",
+        "nearby_recommendations": [
+            "Bagbazar Ghat",
+            "Sovabazar Rajbari"
+        ],
+        "personal_tips": "Visit a month before Durga Puja (September) to see the idols being painted. Ask permission before taking close-up photos of artisans.",
+        "lat": 22.5968,
+        "lng": 88.3654,
+        "opening_hours": "Best visited 10:00–17:00",
+        "price": "Free",
+        "best_time": "August-September",
+        "past_events": "Durga Puja preparation frenzy.",
+        "sentiment_tags": [
+            "artistic",
+            "cultural",
+            "unique",
+            "photography",
+            "narrow-lanes"
+        ],
+        "image_urls": [
+            "https://upload.wikimedia.org/wikipedia/commons/3/3e/Kumartuli_Idol_Making.jpg"
+        ],
+        "source_url": "https://en.wikipedia.org/wiki/Kumartuli"
+    },
+    {
+        "id": "6",
+        "name": "Prinsep Ghat",
+        "category": "Landmark",
+        "subcategory": "Riverside",
+        "description": "A beautiful Palladian porch on the banks of the Hooghly River.",
+        "history": "Built in 1841 in memory of James Prinsep, a scholar who deciphered the Brahmi script.",
+        "nearby_recommendations": [
+            "Outram Ghat",
+            "Scoop (Ice cream parlor)"
+        ],
+        "personal_tips": "Take a private boat ride on the river at sunset. It's very romantic and offers great views of the Vidyasagar Setu.",
+        "lat": 22.5505,
+        "lng": 88.3348,
+        "opening_hours": "Open 24 hours",
+        "price": "Free (Boat rides chargeable)",
+        "best_time": "Sunset",
+        "past_events": "Cultural festivals and shoots.",
+        "sentiment_tags": [
+            "romantic",
+            "scenic",
+            "sunset",
+            "peaceful",
+            "river"
+        ],
+        "image_urls": [
+            "https://upload.wikimedia.org/wikipedia/commons/9/98/Prinsep_Ghat_Kolkata.jpg"
+        ],
+        "source_url": "https://en.wikipedia.org/wiki/Prinsep_Ghat"
+    },
+    {
+        "id": "7",
+        "name": "Dakshineswar Kali Temple",
+        "category": "Temple",
+        "subcategory": "Pilgrimage",
+        "description": "A famous Hindu navaratna temple located on the eastern bank of the Hooghly River.",
+        "history": "Built in 1855 by Rani Rashmoni. The mystic Ramakrishna Paramahansa served as its priest.",
+        "nearby_recommendations": [
+            "Belur Math (via boat)",
+            "Skywalk"
+        ],
+        "personal_tips": "The queue can be very long. Tuesdays and Saturdays are busiest. Use the Skywalk for easy access from the station.",
+        "lat": 22.6544,
+        "lng": 88.3571,
+        "opening_hours": "06:00–12:30, 15:00–20:30",
+        "price": "Free",
+        "best_time": "Early morning",
+        "past_events": "Kali Puja",
+        "sentiment_tags": [
+            "spiritual",
+            "devotional",
+            "crowded",
+            "heritage"
+        ],
+        "image_urls": [
+            "https://upload.wikimedia.org/wikipedia/commons/6/68/Dakshineswar_Kali_Temple_Kolkata.jpg"
+        ],
+        "source_url": "https://en.wikipedia.org/wiki/Dakshineswar_Kali_Temple"
+    },
+    {
+        "id": "8",
+        "name": "Park Street",
+        "category": "Area",
+        "subcategory": "Food & Nightlife",
+        "description": "The street that never sleeps, famous for its restaurants, pubs, and colonial charm.",
+        "history": "Was the center of Kolkata's nightlife in the swinging 60s. Home to iconic eateries like Flurys and Moulin Rouge.",
+        "nearby_recommendations": [
+            "Oxford Bookstore",
+            "South Park Street Cemetery"
+        ],
+        "personal_tips": "Visit during Christmas! The lighting is spectacular. Try the Chelo Kebab at Peter Cat.",
+        "lat": 22.5492,
+        "lng": 88.3494,
+        "opening_hours": "All day",
+        "price": "Variable",
+        "best_time": "December evenings",
+        "past_events": "Christmas Carnival",
+        "sentiment_tags": [
+            "vibrant",
+            "nightlife",
+            "foodie",
+            "festive",
+            "posh"
+        ],
+        "image_urls": [
+            "https://upload.wikimedia.org/wikipedia/commons/c/c6/Park_Street_Kolkata_Christmas.jpg"
+        ],
+        "source_url": "https://en.wikipedia.org/wiki/Park_Street,_Kolkata"
+    },
+    {
+        "id": "9",
+        "name": "Marble Palace",
+        "category": "Heritage",
+        "subcategory": "Mansion",
+        "description": "A palatial nineteenth-century mansion in North Kolkata, famous for its marble walls and floors.",
+        "history": "Built in 1835 by Raja Rajendra Mullick. It houses a private zoo and a collection of Western art.",
+        "nearby_recommendations": [
+            "Jorasanko Thakur Bari"
+        ],
+        "personal_tips": "You need a permit from the West Bengal Tourism Information Bureau 24 hours in advance. Photography is strictly prohibited.",
+        "lat": 22.5825,
+        "lng": 88.3597,
+        "opening_hours": "10:00–16:00 (Mon, Thu closed)",
+        "price": "Free (Permit required)",
+        "best_time": "Morning",
+        "past_events": "Private family events.",
+        "sentiment_tags": [
+            "grand",
+            "art",
+            "hidden-gem",
+            "strict",
+            "quiet"
+        ],
+        "image_urls": [
+            "https://upload.wikimedia.org/wikipedia/commons/8/86/Marble_Palace_Kolkata.jpg"
+        ],
+        "source_url": "https://en.wikipedia.org/wiki/Marble_Palace_(Kolkata)"
+    },
+    {
+        "id": "10",
+        "name": "South Park Street Cemetery",
+        "category": "Heritage",
+        "subcategory": "Cemetery",
+        "description": "An 18th-century non-church cemetery with massive gothic tombs.",
+        "history": "Opened in 1767, it is one of the earliest non-church cemeteries in the world. It houses the grave of Henry Louis Vivian Derozio.",
+        "nearby_recommendations": [
+            "Park Street"
+        ],
+        "personal_tips": "It's surprisingly peaceful. Great for history buffs and photographers. Can be a bit spooky!",
+        "lat": 22.5440,
+        "lng": 88.3508,
+        "opening_hours": "10:00–17:00",
+        "price": "₹20",
+        "best_time": "Winter afternoon",
+        "past_events": "Heritage walks",
+        "sentiment_tags": [
+            "eerie",
+            "peaceful",
+            "historical",
+            "gothic",
+            "green"
+        ],
+        "image_urls": [
+            "https://upload.wikimedia.org/wikipedia/commons/5/5e/South_Park_Street_Cemetery.jpg"
+        ],
+        "source_url": "https://en.wikipedia.org/wiki/South_Park_Street_Cemetery"
+    },
+    {
+        "id": "11",
+        "name": "Eco Park",
+        "category": "Park",
+        "subcategory": "Recreation",
+        "description": "The biggest urban park in India, featuring themed areas like the Seven Wonders of the World.",
+        "history": "Inaugurated in 2012 in New Town to promote eco-tourism.",
+        "nearby_recommendations": [
+            "Mother's Wax Museum"
+        ],
+        "personal_tips": "It's massive. Rent a cycle or take the toy train. The Japanese Garden is very serene.",
+        "lat": 22.6037,
+        "lng": 88.4656,
+        "opening_hours": "14:30–20:30 (Mon closed)",
+        "price": "₹30",
+        "best_time": "Winter evenings",
+        "past_events": "Concerts and Food Festivals",
+        "sentiment_tags": [
+            "modern",
+            "family",
+            "nature",
+            "huge",
+            "fun"
+        ],
+        "image_urls": [
+            "https://upload.wikimedia.org/wikipedia/commons/7/7a/Eco_Park_Kolkata.jpg"
+        ],
+        "source_url": "https://en.wikipedia.org/wiki/Eco_Park,_New_Town"
+    },
+    {
+        "id": "12",
+        "name": "Kalighat Kali Temple",
+        "category": "Temple",
+        "subcategory": "Religious",
+        "description": "One of the 51 Shakti Peethas, dedicated to the goddess Kali.",
+        "history": "The current temple was built in 1809, but the site has been sacred for centuries. The name 'Calcutta' is said to be derived from Kalighat.",
+        "nearby_recommendations": [
+            "Keoratala Burning Ghat"
+        ],
+        "personal_tips": "Beware of aggressive pandas (priests). Keep your belongings safe. The morning aarti is powerful.",
+        "lat": 22.5186,
+        "lng": 88.3420,
+        "opening_hours": "05:00–14:00, 17:00–22:30",
+        "price": "Free",
+        "best_time": "Early morning",
+        "past_events": "Daily worship",
+        "sentiment_tags": [
+            "intense",
+            "devotional",
+            "crowded",
+            "ancient"
+        ],
+        "image_urls": [
+            "https://upload.wikimedia.org/wikipedia/commons/f/f6/Kalighat_Kali_Temple.jpg"
+        ],
+        "source_url": "https://en.wikipedia.org/wiki/Kalighat_Kali_Temple"
+    },
+    {
+        "id": "13",
+        "name": "Belur Math",
+        "category": "Temple",
+        "subcategory": "Spiritual",
+        "description": "The headquarters of the Ramakrishna Math and Mission.",
+        "history": "Founded by Swami Vivekananda in 1897. The architecture fuses Hindu, Christian, and Islamic motifs to symbolize unity of religions.",
+        "nearby_recommendations": [
+            "Dakshineswar Temple"
+        ],
+        "personal_tips": "Sit by the river bank in the evening. It is incredibly peaceful. Silence is strictly maintained.",
+        "lat": 22.6326,
+        "lng": 88.3560,
+        "opening_hours": "06:00–11:30, 16:00–21:00",
+        "price": "Free",
+        "best_time": "Evening Aarti",
+        "past_events": "Durga Puja (Kumari Puja is famous)",
+        "sentiment_tags": [
+            "peaceful",
+            "spiritual",
+            "clean",
+            "river-view",
+            "meditative"
+        ],
+        "image_urls": [
+            "https://upload.wikimedia.org/wikipedia/commons/1/16/Belur_Math_Kolkata.jpg"
+        ],
+        "source_url": "https://en.wikipedia.org/wiki/Belur_Math"
+    },
+    {
+        "id": "14",
+        "name": "New Market",
+        "category": "Market",
+        "subcategory": "Shopping",
+        "description": "A historic shopping destination that sells everything from clothes to cheese.",
+        "history": "Opened in 1874 as Sir Stuart Hogg Market. It was the first municipal market in Kolkata.",
+        "nearby_recommendations": [
+            "Nizam's (Kathi Rolls)"
+        ],
+        "personal_tips": "Bargain hard! Visit Nahoum's Bakery for their rich fruit cake. It's a maze, so try not to get lost.",
+        "lat": 22.5586,
+        "lng": 88.3524,
+        "opening_hours": "10:00–20:00 (Sun closed)",
+        "price": "Variable",
+        "best_time": "Weekdays",
+        "past_events": "Christmas shopping rush",
+        "sentiment_tags": [
+            "chaotic",
+            "shopping",
+            "historical",
+            "foodie",
+            "bustling"
+        ],
+        "image_urls": [
+            "https://upload.wikimedia.org/wikipedia/commons/8/8f/New_Market_Kolkata.jpg"
+        ],
+        "source_url": "https://en.wikipedia.org/wiki/New_Market,_Kolkata"
+    },
+    {
+        "id": "15",
+        "name": "Jorasanko Thakur Bari",
+        "category": "Heritage",
+        "subcategory": "Museum",
+        "description": "The ancestral home of the Tagore family.",
+        "history": "Birthplace of Nobel laureate Rabindranath Tagore. It is now a museum dedicated to his life and works.",
+        "nearby_recommendations": [
+            "Marble Palace",
+            "Girish Park"
+        ],
+        "personal_tips": "A must for literature lovers. The light and sound show is decent.",
+        "lat": 22.5850,
+        "lng": 88.3594,
+        "opening_hours": "10:30–17:00 (Mon closed)",
+        "price": "₹20 (Indians), ₹150 (Foreigners)",
+        "best_time": "Afternoon",
+        "past_events": "Rabindra Jayanti",
+        "sentiment_tags": [
+            "literary",
+            "cultural",
+            "heritage",
+            "quiet",
+            "inspiring"
+        ],
+        "image_urls": [
+            "https://upload.wikimedia.org/wikipedia/commons/e/e6/Jorasanko_Thakur_Bari.jpg"
+        ],
+        "source_url": "https://en.wikipedia.org/wiki/Jorasanko_Thakur_Bari"
+    },
+    {
+        "id": "16",
+        "name": "Science City",
+        "category": "Museum",
+        "subcategory": "Science Center",
+        "description": "The largest science center in the Indian subcontinent, featuring interactive exhibits and a space theatre.",
+        "history": "Inaugurated in 1997, it was developed by the National Council of Science Museums to popularize science.",
+        "nearby_recommendations": [
+            "Milan Mela Ground",
+            "JW Marriott"
+        ],
+        "personal_tips": "Great for kids. The Time Machine ride and the 3D show are popular. Plan for at least 3-4 hours.",
+        "lat": 22.5392,
+        "lng": 88.3963,
+        "opening_hours": "10:00–19:00",
+        "price": "₹70 (Entry) + Rides extra",
+        "best_time": "Morning to afternoon",
+        "past_events": "Science fairs and exhibitions",
+        "sentiment_tags": [
+            "educational",
+            "family",
+            "fun",
+            "interactive",
+            "modern"
+        ],
+        "image_urls": [
+            "https://upload.wikimedia.org/wikipedia/commons/a/a6/Science_City_Kolkata.jpg"
+        ],
+        "source_url": "https://en.wikipedia.org/wiki/Science_City,_Kolkata"
+    },
+    {
+        "id": "17",
+        "name": "Nicco Park",
+        "category": "Park",
+        "subcategory": "Amusement Park",
+        "description": "An amusement park often called the 'Disneyland of West Bengal'.",
+        "history": "Opened in 1991, it was the first amusement park in India to achieve ISO 9001 certification.",
+        "nearby_recommendations": [
+            "Nalban Boating Complex",
+            "Salt Lake Stadium"
+        ],
+        "personal_tips": "Buy the package ticket that includes all rides to save money. The water park 'Wet-O-Wild' is great in summer.",
+        "lat": 22.5714,
+        "lng": 88.4217,
+        "opening_hours": "10:30–19:30",
+        "price": "₹300 (Entry) to ₹1000 (Package)",
+        "best_time": "Winter days",
+        "past_events": "Musical nights",
+        "sentiment_tags": [
+            "fun",
+            "thrilling",
+            "family",
+            "crowded",
+            "energetic"
+        ],
+        "image_urls": [
+            "https://upload.wikimedia.org/wikipedia/commons/e/e3/Nicco_Park_Kolkata.jpg"
+        ],
+        "source_url": "https://en.wikipedia.org/wiki/Nicco_Park"
+    },
+    {
+        "id": "18",
+        "name": "Alipore Zoo",
+        "category": "Park",
+        "subcategory": "Zoo",
+        "description": "India's oldest zoological park, home to a wide variety of animals including the Royal Bengal Tiger.",
+        "history": "Opened in 1876 by Edward VII. It was home to Adwaita, a giant tortoise that lived for over 250 years.",
+        "nearby_recommendations": [
+            "National Library",
+            "Taj Bengal"
+        ],
+        "personal_tips": "Visit in winter to see the migratory birds. It gets very crowded on holidays.",
+        "lat": 22.5356,
+        "lng": 88.3326,
+        "opening_hours": "09:00–17:00 (Thu closed)",
+        "price": "₹50",
+        "best_time": "Winter mornings",
+        "past_events": "Wildlife awareness camps",
+        "sentiment_tags": [
+            "nature",
+            "wildlife",
+            "family",
+            "crowded",
+            "historic"
+        ],
+        "image_urls": [
+            "https://upload.wikimedia.org/wikipedia/commons/f/f9/Alipore_Zoological_Gardens_Kolkata.jpg"
+        ],
+        "source_url": "https://en.wikipedia.org/wiki/Alipore_Zoological_Gardens"
+    },
+    {
+        "id": "19",
+        "name": "Eden Gardens",
+        "category": "Landmark",
+        "subcategory": "Stadium",
+        "description": "One of the most iconic cricket stadiums in the world, known as the 'Mecca of Indian Cricket'.",
+        "history": "Established in 1864. It is the oldest and second-largest cricket stadium in India.",
+        "nearby_recommendations": [
+            "Maidan",
+            "Babughat"
+        ],
+        "personal_tips": "Watching a match here is an electric experience. On non-match days, you might need permission to enter the stands.",
+        "lat": 22.5646,
+        "lng": 88.3433,
+        "opening_hours": "10:00–17:00 (Non-match days)",
+        "price": "Varies by match",
+        "best_time": "During a cricket match",
+        "past_events": "1987 World Cup Final, 2016 T20 World Cup Final",
+        "sentiment_tags": [
+            "passionate",
+            "sporty",
+            "massive",
+            "iconic",
+            "loud"
+        ],
+        "image_urls": [
+            "https://upload.wikimedia.org/wikipedia/commons/3/3u/Eden_Gardens_under_floodlights.jpg"
+        ],
+        "source_url": "https://en.wikipedia.org/wiki/Eden_Gardens"
+    },
+    {
+        "id": "20",
+        "name": "St. Paul's Cathedral",
+        "category": "Religious",
+        "subcategory": "Church",
+        "description": "A magnificent Anglican cathedral known for its Indo-Gothic architecture.",
+        "history": "Completed in 1847, it was the first Episcopal Church in Asia. The original steeple fell in an earthquake in 1934 and was rebuilt.",
+        "nearby_recommendations": [
+            "Birla Planetarium",
+            "Academy of Fine Arts"
+        ],
+        "personal_tips": "It is very quiet and peaceful inside. The stained glass windows are beautiful. Midnight Mass on Christmas Eve is special.",
+        "lat": 22.5444,
+        "lng": 88.3463,
+        "opening_hours": "09:00–18:00",
+        "price": "Free",
+        "best_time": "Christmas season",
+        "past_events": "Christmas Midnight Mass",
+        "sentiment_tags": [
+            "peaceful",
+            "gothic",
+            "spiritual",
+            "beautiful",
+            "grand"
+        ],
+        "image_urls": [
+            "https://upload.wikimedia.org/wikipedia/commons/c/c3/St._Paul%27s_Cathedral_Kolkata.jpg"
+        ],
+        "source_url": "https://en.wikipedia.org/wiki/St._Paul%27s_Cathedral,_Kolkata"
+    },
+    {
+        "id": "21",
+        "name": "Nakhoda Masjid",
+        "category": "Religious",
+        "subcategory": "Mosque",
+        "description": "The largest mosque in Kolkata, capable of accommodating 10,000 devotees.",
+        "history": "Built in 1926 by Abdar Rahim Osman, a shipping magnate. Its architecture is influenced by Akbar's tomb in Sikandra.",
+        "nearby_recommendations": [
+            "Royal Indian Hotel",
+            "Burrabazar"
+        ],
+        "personal_tips": "Visit during Eid to see it lit up. The area around it serves amazing Mughlai food.",
+        "lat": 22.5754,
+        "lng": 88.3544,
+        "opening_hours": "06:00–20:00",
+        "price": "Free",
+        "best_time": "Eid festivals",
+        "past_events": "Eid prayers",
+        "sentiment_tags": [
+            "grand",
+            "spiritual",
+            "architectural",
+            "busy",
+            "historic"
+        ],
+        "image_urls": [
+            "https://upload.wikimedia.org/wikipedia/commons/0/08/Nakhoda_Masjid_Kolkata.jpg"
+        ],
+        "source_url": "https://en.wikipedia.org/wiki/Nakhoda_Masjid"
+    },
+    {
+        "id": "22",
+        "name": "Botanical Gardens",
+        "category": "Park",
+        "subcategory": "Nature",
+        "description": "A massive garden famous for the Great Banyan Tree, which is over 250 years old.",
+        "history": "Founded in 1787 by Colonel Robert Kyd. It was originally known as the Company Bagh.",
+        "nearby_recommendations": [
+            "Shalimar Ghat"
+        ],
+        "personal_tips": "It is located in Shibpur (Howrah), across the river. The Great Banyan Tree looks like a forest by itself. Wear comfortable walking shoes.",
+        "lat": 22.5544,
+        "lng": 88.2904,
+        "opening_hours": "08:00–17:00 (Mon closed)",
+        "price": "₹10 (Indians), ₹100 (Foreigners)",
+        "best_time": "Winter mornings",
+        "past_events": "Flower shows",
+        "sentiment_tags": [
+            "green",
+            "vast",
+            "nature",
+            "peaceful",
+            "scientific"
+        ],
+        "image_urls": [
+            "https://upload.wikimedia.org/wikipedia/commons/f/f2/The_Great_Banyan_Tree.jpg"
+        ],
+        "source_url": "https://en.wikipedia.org/wiki/Acharya_Jagadish_Chandra_Bose_Indian_Botanic_Garden"
+    },
+    {
+        "id": "23",
+        "name": "Mother House",
+        "category": "Religious",
+        "subcategory": "Pilgrimage",
+        "description": "The headquarters of the Missionaries of Charity and the tomb of Mother Teresa.",
+        "history": "Established by Mother Teresa in 1950. It serves as a place of pilgrimage for people from all over the world.",
+        "nearby_recommendations": [
+            "Ripon Street"
+        ],
+        "personal_tips": "The museum is small but very moving. It is a place of absolute silence and reflection.",
+        "lat": 22.5533,
+        "lng": 88.3636,
+        "opening_hours": "08:00–12:00, 15:00–18:00 (Thu closed)",
+        "price": "Free",
+        "best_time": "Morning",
+        "past_events": "Mother Teresa's canonization celebrations",
+        "sentiment_tags": [
+            "humble",
+            "spiritual",
+            "peaceful",
+            "inspiring",
+            "quiet"
+        ],
+        "image_urls": [
+            "https://upload.wikimedia.org/wikipedia/commons/0/0f/Mother_House_Kolkata.jpg"
+        ],
+        "source_url": "https://en.wikipedia.org/wiki/Missionaries_of_Charity"
+    },
+    {
+        "id": "24",
+        "name": "Birla Planetarium",
+        "category": "Museum",
+        "subcategory": "Science",
+        "description": "The largest planetarium in Asia and the second largest in the world.",
+        "history": "Inaugurated in 1963 by Jawaharlal Nehru. Its architecture is modeled on the Buddhist Stupa at Sanchi.",
+        "nearby_recommendations": [
+            "St. Paul's Cathedral",
+            "Victoria Memorial"
+        ],
+        "personal_tips": "Check the show timings and language (English/Hindi/Bengali) before you go. The cosmic collision show is good.",
+        "lat": 22.5453,
+        "lng": 88.3476,
+        "opening_hours": "12:00–18:30",
+        "price": "₹100",
+        "best_time": "Afternoon",
+        "past_events": "Astronomy workshops",
+        "sentiment_tags": [
+            "educational",
+            "scientific",
+            "family",
+            "cool",
+            "dark"
+        ],
+        "image_urls": [
+            "https://upload.wikimedia.org/wikipedia/commons/3/3a/Birla_Planetarium_Kolkata.jpg"
+        ],
+        "source_url": "https://en.wikipedia.org/wiki/Birla_Planetarium,_Kolkata"
+    },
+    {
+        "id": "25",
+        "name": "Millennium Park",
+        "category": "Park",
+        "subcategory": "Riverside",
+        "description": "A private park along the Hooghly River, offering great views of the Howrah Bridge.",
+        "history": "Opened in 1999 as part of the Kolkata Riverside Beautification Project.",
+        "nearby_recommendations": [
+            "Fairlie Ghat",
+            "Shipping Corporation of India"
+        ],
+        "personal_tips": "Good for a casual evening stroll. The food court offers decent snacks. The view of the lit-up Howrah Bridge is excellent.",
+        "lat": 22.5726,
+        "lng": 88.3471,
+        "opening_hours": "10:00–20:00",
+        "price": "₹10",
+        "best_time": "Evening",
+        "past_events": "Musical fountain shows",
+        "sentiment_tags": [
+            "riverside",
+            "relaxing",
+            "view",
+            "family",
+            "breezy"
+        ],
+        "image_urls": [
+            "https://upload.wikimedia.org/wikipedia/commons/6/62/Millennium_Park_Kolkata.jpg"
+        ],
+        "source_url": "https://en.wikipedia.org/wiki/Millennium_Park,_Kolkata"
     }
 ]
